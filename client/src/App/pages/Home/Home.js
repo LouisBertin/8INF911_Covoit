@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Home.css';
-import Customers from "../components/customers/customers";
-import Prices from "../components/prices/prices";
+import Customers from "../../components/customers/customers";
+import Prices from "../../components/prices/prices";
 
 class Home extends Component {
     render() {

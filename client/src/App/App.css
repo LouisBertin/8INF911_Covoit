@@ -1,0 +1,9 @@
+.app nav {
+    display: flex;
+    justify-content: space-around;
+}
+
+.app > div {
+    width: 80%;
+    margin: auto;
+}
