@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const CounterSchema = new mongoose.Schema({
+const CatSchema = new mongoose.Schema({
     name: String
 });
 
-module.exports = mongoose.model('Cat', CounterSchema);
+module.exports = mongoose.model('Cat', CatSchema);
