@@ -1,4 +1,4 @@
-import User from '../../models/User'
+let User = require('../../models/User')
 
 module.exports = (app) => {
     app.post('/api/account/signup', (req, res, next) => {

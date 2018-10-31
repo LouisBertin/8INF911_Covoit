@@ -1,6 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose');
 const config = require('../config/config')
+const port = 5000;
+
 // db connection
 mongoose.connect(config.db, { useNewUrlParser: true } );
 
@@ -9,5 +11,10 @@ const app = express()
 require('./routes')(app);
 
 // run server
-const port = 5000
-app.listen(port, () => console.log('Hello world!'))
+app.listen(port, (err) => {
+    if (err) {
+        console.log(err);
+    }
+
+    console.info('>>> 🌎 Open http://localhost:%s/ in your browser.', port);
+});
