@@ -2,11 +2,11 @@
   "name": "nextjs_crash_express",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": {
     "client-install": "cd client && npm i",
     "start": "node server.js",
-    "server": "nodemon server.js",
+    "server": "cd server && nodemon server.js",
     "client": "cd client && npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
@@ -15,6 +15,7 @@
   "dependencies": {
     "concurrently": "^4.0.1",
     "express": "^4.16.4",
+    "mongoose": "^5.3.8",
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
