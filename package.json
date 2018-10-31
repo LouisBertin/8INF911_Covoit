@@ -14,7 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "concurrently": "^4.0.1",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.5"
