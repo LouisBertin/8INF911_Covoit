@@ -8,6 +8,9 @@ mongoose.connect(config.db, { useNewUrlParser: true } );
 
 // express routes
 const app = express()
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 require('./routes')(app);
 
 // run server
