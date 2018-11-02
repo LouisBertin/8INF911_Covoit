@@ -1,6 +1,16 @@
 # Covoit
 Un site avec un front en [ReactJS](https://reactjs.org/) et un back-end en [NodeJS](https://nodejs.org/en/) :fire:
 
+## Prérequis
+
+* Installer [Git](https://tinyurl.com/ydg7nc6e)
+* Installer NodeJS
+* Installer MongoDB
+
+Il est conseillé d'installer un GUI pour MongoDB comme [MongoDB Compass](https://www.mongodb.com/products/compass) 😉
+
+⚠️ **IMPORTANT** Il est nécessaire de renseigner l'url de votre BDD dans le fichier `config/config.js` 
+
 ## Installation
 
 * Clonez ce dépôt
