@@ -57,7 +57,6 @@ module.exports = (app) => {
     })
 
     app.post('/api/account/signin', (req, res, next) => {
-
         const {body} = req
         const {
             email,
@@ -75,13 +74,13 @@ module.exports = (app) => {
             email: email
         }, (error, users) => {
             if (error) {
-                res.send({
+                return res.send({
                     success: false,
                     message: 'Error: Server error'
                 })
             }
             if (users.length !== 1) {
-                res.send({
+                return res.send({
                     success: false,
                     message: 'Error: Invalid'
                 })
@@ -148,8 +147,8 @@ module.exports = (app) => {
 
     app.get('/api/account/logout', (req, res, next) => {
 
-        const { query } = req
-        const { token } = query
+        const { query } = req;
+        const { token } = query;
 
         UserSession.findOneAndUpdate({
             _id: token,
