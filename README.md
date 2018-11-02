@@ -9,7 +9,7 @@ Un site avec un front en [ReactJS](https://reactjs.org/) et un back-end en [Node
 
 Il est conseillé d'installer un GUI pour MongoDB comme [MongoDB Compass](https://www.mongodb.com/products/compass) 😉
 
-⚠️ **IMPORTANT** Il est nécessaire de renseigner l'url de votre BDD dans le fichier `config/config.js` 
+⚠️ **IMPORTANT** : Il est nécessaire de renseigner l'url de votre BDD dans le fichier `config/config.js` 
 
 ## Installation
 
