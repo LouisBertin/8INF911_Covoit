@@ -6,29 +6,25 @@ import Contact from './pages/Contact/Contact';
 import SignUp from "./pages/Auth/SignUp/SignUp";
 import SignIn from "./pages/Auth/SignIn/SignIn";
 import Logout from "./components/Logout/Logout";
+import Footer from "./pages/Layout/Footer";
+import Header from "./pages/Layout/Header";
 
 class App extends Component {
     render() {
         const App = () => (
             <div className="app">
-                <nav>
-                    <ul>
-                        <li><Link to="/">Home</Link></li>
-                        <li><Link to="/contact">Contact</Link></li>
-                    </ul>
-                    <ul>
-                        <li><Link to="/signup">Sign Up</Link></li>
-                        <li><Link to="/signin">Sign In</Link></li>
-                        <Logout/>
-                    </ul>
-                </nav>
+                <Header/>
 
-                <Switch>
-                    <Route exact path='/' component={Home}/>
-                    <Route path='/contact' component={Contact}/>
-                    <Route path='/signup' component={SignUp}/>
-                    <Route path='/signin' component={SignIn}/>
-                </Switch>
+                <main>
+                    <Switch>
+                        <Route exact path='/' component={Home}/>
+                        <Route path='/contact' component={Contact}/>
+                        <Route path='/signup' component={SignUp}/>
+                        <Route path='/signin' component={SignIn}/>
+                    </Switch>
+                </main>
+
+                <Footer/>
             </div>
         )
         return (
