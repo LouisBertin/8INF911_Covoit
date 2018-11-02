@@ -5,7 +5,7 @@ module.exports = (app) => {
 
     app.post('/api/account/signup', (req, res, next) => {
 
-        const { body } = req
+        const { body } = req;
         const {
             firstName,
             lastName,
@@ -13,6 +13,8 @@ module.exports = (app) => {
             password
         } = body;
 
+        // Validator
+        // TODO: implement express-validator ?
         if (!firstName) {
             return res.send({
                 success: false,
