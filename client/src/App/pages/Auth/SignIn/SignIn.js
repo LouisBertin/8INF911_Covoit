@@ -73,7 +73,8 @@ class SignIn extends Component {
                     this.setState({
                         signInError: json.message,
                         token: json.token
-                    })
+                    });
+                    this.props.loggedIn()
                 } else {
                     this.setState({
                         signInError: json.message,

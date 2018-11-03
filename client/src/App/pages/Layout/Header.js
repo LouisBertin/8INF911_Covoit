@@ -13,9 +13,14 @@ class Header extends Component {
                         <li><Link to="/contact">Contact</Link></li>
                     </ul>
                     <ul>
-                        <li><Link to="/signup">Sign Up</Link></li>
-                        <li><Link to="/signin">Sign In</Link></li>
-                        <Logout/>
+                        {
+                            (!this.props.loggedIn) ? (
+                                <div>
+                                    <li><Link to="/signup">Sign Up</Link></li>
+                                    <li><Link to="/signin">Sign In</Link></li>
+                                </div>
+                            ) : <Logout/>
+                        }
                     </ul>
                 </nav>
             </header>
