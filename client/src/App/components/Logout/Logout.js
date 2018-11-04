@@ -14,8 +14,7 @@ class Logout extends Component {
                 .then(res => res.json())
                 .then(json => {
                     if (json.success) {
-                        // TODO: Do it dynamically
-                        window.location.replace("http://localhost:3000/");
+                        window.location.replace(window.location.origin);
                     }
                 })
         }
