@@ -4,7 +4,7 @@ Un site avec un front en [ReactJS](https://reactjs.org/) et un back-end en [Node
 ## Prérequis
 
 * Installer [Git](https://tinyurl.com/ydg7nc6e)
-* Installer NodeJS
+* Installer NodeJS v10
 * Installer MongoDB
 
 Il est conseillé d'installer un GUI pour MongoDB comme [MongoDB Compass](https://www.mongodb.com/products/compass) 😉
