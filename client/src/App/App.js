@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home/Home';
 import Contact from './pages/Contact/Contact';
@@ -8,6 +8,7 @@ import SignIn from "./pages/Auth/SignIn/SignIn";
 import Footer from "./pages/Layout/Footer";
 import Header from "./pages/Layout/Header";
 import {getFromStorage} from "./utils/storage";
+import Index from "./pages/profile/Index";
 
 class App extends Component {
 
@@ -60,7 +61,16 @@ class App extends Component {
                         <Route
                             path='/signin'
                             render={(props) => <SignIn {...props} loggedIn={this.loggedIn.bind(this)} />}
-                        />                    </Switch>
+                        />
+
+                        {
+                            /* Authenticated routes */
+                            (this.state.loggedIn) ? (
+                                <Route path='/user/profile' component={Index}/>
+                            ) : null
+                        }
+
+                    </Switch>
                 </main>
 
                 <Footer/>

@@ -19,7 +19,14 @@ class Header extends Component {
                                     <li><Link to="/signup">Sign Up</Link></li>
                                     <li><Link to="/signin">Sign In</Link></li>
                                 </div>
-                            ) : <Logout/>
+                            ) :
+
+                            /* Authenticated routes */
+                            <div>
+                                <Logout/>
+                                <li><Link to="/user/profile">Profile</Link></li>
+                            </div>
+
                         }
                     </ul>
                 </nav>
