@@ -12,4 +12,28 @@ module.exports = (app) => {
         res.json(markers)
     })
 
+    app.post('/api/markers/add', (req, res, next) => {
+
+        const {body} = req;
+        const {
+            lat,
+            lng,
+        } = body;
+
+        // TODO: express validator ?
+        if (!lat || !lng) {
+            return res.send({
+                success: false,
+                message: 'Error: One field is empty'
+            })
+        }
+
+        return res.send({
+            success: true,
+            message: 'Error: One field is not a number'
+        })
+
+    });
+
+
 }
