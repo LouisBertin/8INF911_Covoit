@@ -25,6 +25,7 @@ class Header extends Component {
                             <div>
                                 <Logout/>
                                 <li><Link to="/user/profile">Profile</Link></li>
+                                <li><Link to="/user/markers/show">Markers</Link></li>
                             </div>
 
                         }

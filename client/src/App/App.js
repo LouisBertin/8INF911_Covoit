@@ -9,6 +9,7 @@ import Footer from "./pages/Layout/Footer";
 import Header from "./pages/Layout/Header";
 import {getFromStorage} from "./utils/storage";
 import Index from "./pages/profile/Index";
+import Show from "./pages/profile/markers/Show";
 
 class App extends Component {
 
@@ -66,7 +67,10 @@ class App extends Component {
                         {
                             /* Authenticated routes */
                             (this.state.loggedIn) ? (
-                                <Route path='/user/profile' component={Index}/>
+                                <React.Fragment>
+                                    <Route path='/user/profile' component={Index}/>
+                                    <Route path='/user/markers/show' component={Show}/>
+                                </React.Fragment>
                             ) : null
                         }
 
