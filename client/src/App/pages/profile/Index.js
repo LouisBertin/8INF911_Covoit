@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {getFromStorage} from "../../utils/storage";
 
 class Index extends Component {
 
@@ -8,9 +9,17 @@ class Index extends Component {
         this.state = {
             lng: '',
             lat: '',
-            errorMsg: ''
+            errorMsg: '',
+            userToken: ''
         }
     }
+
+    componentDidMount() {
+        const obj = getFromStorage('the_main_app');
+        if (obj.token) {
+            this.setState({userToken: obj.token})
+        }
+    };
 
     render () {
         const { errorMsg } = this.state;
@@ -46,6 +55,7 @@ class Index extends Component {
         const {
             lat,
             lng,
+            userToken
         } = this.state;
 
         fetch('/api/markers/add', {
@@ -55,7 +65,8 @@ class Index extends Component {
             },
             body: JSON.stringify({
                 lat: lat,
-                lng: lng
+                lng: lng,
+                token: userToken
             })
         }).then(res => res.json())
             .then(json => {

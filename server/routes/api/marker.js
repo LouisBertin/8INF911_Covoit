@@ -1,4 +1,6 @@
 let Marker = require('../../models/Marker')
+let UserSession = require('../../models/UserSession')
+let User = require('../../models/User')
 
 module.exports = (app) => {
 
@@ -14,6 +16,7 @@ module.exports = (app) => {
         const {
             lat,
             lng,
+            token
         } = body;
 
         // TODO: express validator ?
@@ -24,11 +27,17 @@ module.exports = (app) => {
             })
         }
 
-        let marker = new Marker({
-            lng: lng,
-            lat: lat
+        // find user and insert marker in db
+        UserSession.findOne({ _id: token }, function (err, userSession) {
+            User.findOne({ _id: userSession.userId }, function (err, user) {
+                let marker = new Marker({
+                    lng: lng,
+                    lat: lat,
+                    userId: user._id
+                });
+                marker.save();
+            });
         });
-        marker.save();
 
         return res.send({
             success: true,
