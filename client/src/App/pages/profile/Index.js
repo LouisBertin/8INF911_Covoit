@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {getFromStorage} from "../../utils/storage";
+import Map from "../../components/Map";
 
 class Index extends Component {
 
@@ -34,20 +35,23 @@ class Index extends Component {
                     ) : null
                 }
 
-                <input type="text" name="lng" placeholder="lng" onChange={this.onChangeLng}/><br/>
-                <input type="text" name="lat" placeholder="lat" onChange={this.onChangeLat}/><br/>
+                <Map geocoderBar={true}
+                     userGeolocate={true}
+                     updateLng={this.updateLng}
+                     updateLat={this.updateLat}
+                />
                 <button onClick={this.onAddMarker}>Send</button>
 
             </div>
         )
     }
 
-    // onChange
-    onChangeLng = (event) => {
-        this.setState({lng: event.target.value})
+    // updateStates
+    updateLng = (value) => {
+        this.setState({lng: value})
     };
-    onChangeLat = (event) => {
-        this.setState({lat: event.target.value})
+    updateLat = (value) => {
+        this.setState({lat: value})
     };
 
     // onClick
