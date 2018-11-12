@@ -1,15 +1,11 @@
-let Cat = require('../../models/Cat')
+let Marker = require('../../models/Marker')
 
 module.exports = (app) => {
 
     app.get('/api/markers', (req, res) => {
-        const markers = [
-            {id: 1, lng: -71.057660, lat: 48.412890 },
-            {id: 2, lng: -71.073200, lat: 48.422220},
-            {id: 3, lng: -71.062980, lat: 48.428940},
-        ]
-
-        res.json(markers)
+        Marker.find({}, function(err, markers) {
+            res.json(markers)
+        });
     })
 
     app.post('/api/markers/add', (req, res, next) => {
@@ -28,9 +24,15 @@ module.exports = (app) => {
             })
         }
 
+        let marker = new Marker({
+            lng: lng,
+            lat: lat
+        });
+        marker.save();
+
         return res.send({
             success: true,
-            message: 'Error: One field is not a number'
+            message: 'Congratulations'
         })
 
     });
