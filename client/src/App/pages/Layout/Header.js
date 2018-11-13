@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
+import AppBar from "@material-ui/core/AppBar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import Toolbar from "@material-ui/core/Toolbar";
 import Logout from "../../components/Logout/Logout";
+
+const btndroite= {
+    right:'100%'
+}
+
 
 class Header extends Component {
 
@@ -8,28 +18,38 @@ class Header extends Component {
         return (
             <header>
                 <nav>
-                    <ul>
-                        <li><Link to="/">Home</Link></li>
-                        <li><Link to="/contact">Contact</Link></li>
-                    </ul>
-                    <ul>
-                        {
-                            (!this.props.loggedIn) ? (
-                                <div>
-                                    <li><Link to="/signup">Sign Up</Link></li>
-                                    <li><Link to="/signin">Sign In</Link></li>
-                                </div>
-                            ) :
+                    <AppBar position="static" color="default">
+                        <Toolbar>
+                            <Typography variant="h6" color="inherit" noWrap>
+                                CoVoit
+                            </Typography>
 
-                            /* Authenticated routes */
-                            <div>
-                                <Logout/>
-                                <li><Link to="/user/profile">Profile</Link></li>
-                            </div>
+                            <Link to="/"><Button>Home</Button></Link>
+                            <Link to="/contact"><Button>Contact</Button></Link>
+                                <Button>Proposer un trajet</Button>
+                                <ul>
+                                    {
+                                        (!this.props.loggedIn) ? (
+                                            <div>
+                                                <Link to="/signup"><Button color="primary"
+                                                        variant="contained">Sign Up</Button></Link>
+                                                <Link to="/signin"><Button color="primary" variant="outlined">Sign In</Button></Link>
+                                            </div>
+                                        ) :
 
-                        }
-                    </ul>
+                                        /* Authenticated routes */
+                                        <div>
+                                            <Logout/>
+                                            <li><Link to="/user/profile">Profile</Link></li>
+                                        </div>
+
+                                    }
+                                </ul>
+
+                        </Toolbar>
+                    </AppBar>
                 </nav>
+
             </header>
         )
     }

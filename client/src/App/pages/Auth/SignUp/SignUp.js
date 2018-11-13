@@ -1,5 +1,18 @@
 import React, { Component } from 'react';
 import {getFromStorage} from "../../../utils/storage";
+import PropTypes from "prop-types";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import LockIcon from "@material-ui/icons/LockOutlined";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import withStyles from "@material-ui/core/styles/withStyles";
 
 class SignUp extends Component {
 
@@ -106,34 +119,46 @@ class SignUp extends Component {
                                 <p>{signUpError}</p>
                             ) : null
                         }
-
-                        <p>Sign up</p>
-                        <input
-                            type="text"
-                            placeholder="firstName"
-                            value={signUpFirstName}
-                            onChange={this.handleSignUpFirstName}
-                        />
-                        <br/>
-                        <input
-                            type="text"
-                            placeholder="lastName"
-                            value={signUpLastName}
-                            onChange={this.handleSignUpLastName}
-                        /><br/>
-                        <input
-                            type="email"
-                            placeholder="email"
-                            value={signUpEmail}
-                            onChange={this.handleSignUpEmail}
-                        /><br/>
-                        <input
+                        <Paper className="lll">
+                        <Typography component="h1" variant="h5" Style="margin:auto;">Sign Up</Typography>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="firstname">First name</InputLabel>
+                            <Input
+                                type="text"
+                                name="firstname"
+                                value={signUpFirstName}
+                                onChange={this.handleSignUpFirstName}
+                            />
+                        </FormControl>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="lastname">Last name</InputLabel>
+                            <Input
+                                type="text"
+                                namme="lastName"
+                                value={signUpLastName}
+                                onChange={this.handleSignUpLastName}
+                            />
+                        </FormControl>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="firstname">Email Address</InputLabel>
+                            <Input
+                                type="email"
+                                name="email"
+                                value={signUpEmail}
+                                onChange={this.handleSignUpEmail}
+                            />
+                        </FormControl>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="firstname">Password</InputLabel>
+                        <Input
                             type="password"
-                            placeholder="password"
+                            name="password"
                             value={signUpPassword}
                             onChange={this.handleSignUpPassword}
-                        /><br/>
-                        <button onClick={this.onSignUp}>Sign up</button>
+                        />
+                        </FormControl>
+                        <Button onClick={this.onSignUp} color="primary" variant={"contained"}>Sign up</Button>
+                        </Paper>
                     </div>
                 </div>
             )
