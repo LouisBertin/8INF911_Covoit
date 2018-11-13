@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import mapBox from 'mapbox-gl'
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
+import mapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 
 const MAPBOX_API_TOKEN = 'pk.eyJ1IjoibG91aXNiZXJ0aW4iLCJhIjoiY2pvOHo5OWM2MDAwazNycDBqdmg4dDNlaSJ9.dG2toPupuK_AbxZtAyqINQ'
 const mapStyle = {
@@ -20,13 +20,25 @@ class Map extends Component {
             zoom: 9 // starting zoom
         });
 
-        // enable methods
+        this.propsManager()
+    }
+
+    // deal with all props
+    propsManager = () => {
+        let is_user_marker = null; let user_token = null
+        if (this.props.userMarker) {
+            is_user_marker = this.props.userMarker[0]
+            user_token = this.props.userMarker[1]
+        }
+
         if (this.props.getMarkers)
-            this.getMarkers()
+            this.getMarkers();
         if (this.props.geocoderBar)
-            this.geocoderBar()
+            this.geocoderBar();
         if (this.props.userGeolocate)
-            this.userGeolocate()
+            this.userGeolocate();
+        if (is_user_marker)
+            this.userMarker(user_token);
     }
 
     render() {
@@ -64,7 +76,7 @@ class Map extends Component {
     geocoderBar = () => {
         // bind component
         let $this = this;
-        let geocoder = new MapboxGeocoder({
+        let geocoder = new mapboxGeocoder({
             accessToken: mapBox.accessToken
         });
         map.addControl(geocoder);
@@ -98,6 +110,23 @@ class Map extends Component {
                 $this.props.updateLng(lng);
             });
         });
+    }
+
+    // only display user markers
+    userMarker = (token) => {
+        const url = '/api/markers/token?token=' + token;
+        fetch(url)
+            .then(res => res.json())
+            .then(json => {
+                for (let marker of json) {
+                    new mapBox.Marker()
+                        .setLngLat([marker.lng, marker.lat])
+                        .addTo(map);
+                }
+            })
+            .catch(function(err) {
+                console.log('Fetch Error : ', err);
+            });
     }
 
 }

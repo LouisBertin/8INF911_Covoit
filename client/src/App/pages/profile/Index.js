@@ -15,7 +15,7 @@ class Index extends Component {
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const obj = getFromStorage('the_main_app');
         if (obj.token) {
             this.setState({userToken: obj.token})
@@ -23,7 +23,7 @@ class Index extends Component {
     };
 
     render () {
-        const { errorMsg } = this.state;
+        const { userToken, errorMsg } = this.state;
 
         return (
             <div>
@@ -37,6 +37,7 @@ class Index extends Component {
 
                 <Map geocoderBar={true}
                      userGeolocate={true}
+                     userMarker={[true, userToken]}
                      updateLng={this.updateLng}
                      updateLat={this.updateLat}
                 />
