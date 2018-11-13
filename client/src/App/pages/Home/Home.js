@@ -7,7 +7,6 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <h1>Home here!</h1>
                 <Map
                     getMarkers={true}
                     userGeolocate={true}

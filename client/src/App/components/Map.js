@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import mapBox from 'mapbox-gl'
 import mapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
+const config = require('../utils/config')
 
-const MAPBOX_API_TOKEN = 'pk.eyJ1IjoibG91aXNiZXJ0aW4iLCJhIjoiY2pvOHo5OWM2MDAwazNycDBqdmg4dDNlaSJ9.dG2toPupuK_AbxZtAyqINQ'
+const MAPBOX_API_TOKEN = config.MAPBOX_API_TOKEN
 const mapStyle = {
-    height: '500px',
+    height: '600px',
     width: '100%'
 };
 let map;

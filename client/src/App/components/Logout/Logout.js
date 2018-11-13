@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {getFromStorage} from "../../utils/storage";
+const config = require('../../utils/config')
 
 class Logout extends Component {
 
@@ -14,7 +15,7 @@ class Logout extends Component {
                 .then(res => res.json())
                 .then(json => {
                     if (json.success) {
-                        window.location.replace(window.location.origin);
+                        window.location.replace(config.SITE_URL);
                     }
                 })
         }
