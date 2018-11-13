@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import {getFromStorage, setInStorage} from "../../../utils/storage";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
-import LockIcon from "@material-ui/icons/LockOutlined";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -147,8 +145,8 @@ class SignIn extends Component {
                                 <p>{signInError}</p>
                             ) : null
                         }
-                        <Paper class="lll">
-                            <Typography component="h1" variant="h5" Style="margin:auto;">Sign in</Typography>
+                        <Paper className="lll">
+                            <Typography component="h1" variant="h5" style={{margin: 'auto'}}>Sign in</Typography>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="email">Email Address</InputLabel>
                             <Input
