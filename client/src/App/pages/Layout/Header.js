@@ -31,11 +31,12 @@ class Header extends Component {
                                             </div>
                                         ) :
 
-                                        /* Authenticated routes */
-                                        <div>
-                                            <Logout/>
-                                            <li><Link to="/user/profile">Profile</Link></li>
-                                        </div>
+                            /* Authenticated routes */
+                            <div>
+                                <Logout/>
+                                <li><Link to="/user/profile">Profile</Link></li>
+                                <li><Link to="/user/markers/show">Markers</Link></li>
+                            </div>
 
                                     }
                                 </ul>

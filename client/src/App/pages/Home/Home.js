@@ -8,7 +8,7 @@ class Home extends Component {
         return (
             <div>
                 <h1>Home here!</h1>
-                <Map/>
+                <Map getMarkers={true} />
             </div>
         )
     }
