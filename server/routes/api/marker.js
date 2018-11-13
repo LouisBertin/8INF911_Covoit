@@ -10,6 +10,18 @@ module.exports = (app) => {
         });
     })
 
+    app.get('/api/markers/token', (req, res) => {
+        const { token } = req.query;
+
+        // TODO : manage errors
+        UserSession.findOne({ _id: token }, function (err, user_session) {
+            const user_id = user_session.userId;
+                Marker.find({userId: user_id}, function(err, markers) {
+                    res.json(markers)
+                });
+        });
+    })
+
     app.post('/api/markers/add', (req, res, next) => {
 
         const {body} = req;
@@ -46,5 +58,20 @@ module.exports = (app) => {
 
     });
 
+    app.post('/api/markers/delete', (req, res, next) => {
+        const {body} = req;
+        const {
+            id
+        } = body;
+
+        Marker.deleteOne({ _id: id }, function (err) {
+            if (err) return handleError(err);
+
+            return res.send({
+                success: true,
+                message: 'Marker deleted!'
+            })
+        });
+    })
 
 }

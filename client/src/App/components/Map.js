@@ -11,10 +11,6 @@ let map;
 
 class Map extends Component {
 
-    constructor(props) {
-        super(props)
-    }
-
     componentDidMount() {
         mapBox.accessToken = MAPBOX_API_TOKEN;
         map = new mapBox.Map({
