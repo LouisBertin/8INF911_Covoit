@@ -6,7 +6,8 @@ const config = require('../utils/config')
 const MAPBOX_API_TOKEN = config.MAPBOX_API_TOKEN
 const mapStyle = {
     height: '600px',
-    width: '100%'
+    width: '100%',
+    margin: '3em 0'
 };
 let map;
 
