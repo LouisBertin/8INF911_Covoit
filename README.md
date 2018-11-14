@@ -32,3 +32,7 @@ Voilà! Le site est accessible via l'url <http://localhost:3000/> :sunglasses:
 ## Ressources
 
 * [MapBox API](https://www.mapbox.com/mapbox-gl-js/api)
+* Installer un package npm pour le `client` :
+````bash
+npm run client-install -- nom_du_package
+````
