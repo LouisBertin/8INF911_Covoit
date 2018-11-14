@@ -96,7 +96,7 @@ class Map extends Component {
                     const is_user_circle = $this.props.circle[0];
 
                     if (is_user_circle) {
-                        marker_circle = new MapboxCircle({lat: user_lat, lng: user_lng}, 300, {
+                        marker_circle = new MapboxCircle({lat: user_lat, lng: user_lng}, config.CIRCLE_SIZE, {
                             fillColor: '#29AB87'
                         }).addTo(map);
                     }
