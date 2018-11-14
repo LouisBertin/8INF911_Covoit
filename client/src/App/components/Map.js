@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import mapBox from 'mapbox-gl'
-import mapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 const config = require('../utils/config')
+const MapboxCircle = require('mapbox-gl-circle');
 
 const MAPBOX_API_TOKEN = config.MAPBOX_API_TOKEN
 const mapStyle = {
@@ -9,12 +11,13 @@ const mapStyle = {
     width: '100%',
     margin: '3em 0'
 };
-let map;
+let map; let marker_circle;
 
 class Map extends Component {
 
     componentDidMount() {
         mapBox.accessToken = MAPBOX_API_TOKEN;
+        // init map
         map = new mapBox.Map({
             container: 'map', // container id
             style: 'mapbox://styles/mapbox/streets-v9', // stylesheet location
@@ -23,6 +26,11 @@ class Map extends Component {
         });
 
         this.propsManager()
+    }
+
+    componentDidUpdate() {
+        if (marker_circle)
+            this.updateCircleRadius(this.props.circle[1])
     }
 
     // deal with all props
@@ -65,20 +73,43 @@ class Map extends Component {
     }
 
     // enable user geolocation
+    // TODO : deal with toggle geolocate button
     userGeolocate = () => {
-        map.addControl(new mapBox.GeolocateControl({
+        const $this = this;
+
+        // GeolocateControl object
+        let geolocate = new mapBox.GeolocateControl({
             positionOptions: {
                 enableHighAccuracy: true
             },
-            trackUserLocation: true
-        }));
+            trackUserLocation: false
+        });
+        map.addControl(geolocate);
+
+        geolocate.on('geolocate', function(data) {
+            let user_location = data.coords
+            if (user_location) {
+                const user_lat = user_location.latitude;
+                const user_lng = user_location.longitude;
+
+                if ($this.props.circle) {
+                    const is_user_circle = $this.props.circle[0];
+
+                    if (is_user_circle) {
+                        marker_circle = new MapboxCircle({lat: user_lat, lng: user_lng}, 300, {
+                            fillColor: '#29AB87'
+                        }).addTo(map);
+                    }
+                }
+            }
+        });
     }
 
     // location search bar
     geocoderBar = () => {
         // bind component
         let $this = this;
-        let geocoder = new mapboxGeocoder({
+        let geocoder = new MapboxGeocoder({
             accessToken: mapBox.accessToken
         });
         map.addControl(geocoder);
@@ -129,6 +160,10 @@ class Map extends Component {
             .catch(function(err) {
                 console.log('Fetch Error : ', err);
             });
+    }
+
+    updateCircleRadius = (radius) => {
+        marker_circle.setRadius(radius)
     }
 
 }

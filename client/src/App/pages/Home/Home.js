@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Home.css';
 import Map from "../../components/Map";
-import Slider   from 'rc-slider';
+import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
 
@@ -9,9 +9,16 @@ const Handle = Slider.Handle;
 
 class Home extends Component {
 
-    handleSlider = (event) => {
-        // TODO : do the rest
-        console.log(event)
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            slider_value: [true, 300]
+        }
+    }
+
+    updateSlider = (value) => {
+        this.setState({slider_value: [true, value] })
     };
 
     handle = (props) => {
@@ -38,11 +45,12 @@ class Home extends Component {
                     step={100}
                     defaultValue={3}
                     handle={this.handle}
-                    onAfterChange={this.handleSlider}
+                    onAfterChange={this.updateSlider}
                 />
                 <Map
                     getMarkers={true}
                     userGeolocate={true}
+                    circle={this.state.slider_value}
                 />
             </div>
         )
