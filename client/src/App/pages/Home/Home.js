@@ -48,7 +48,6 @@ class Home extends Component {
                     onAfterChange={this.updateSlider}
                 />
                 <Map
-                    getMarkers={true}
                     userGeolocate={true}
                     circle={this.state.slider_value}
                 />

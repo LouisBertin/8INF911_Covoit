@@ -11,7 +11,7 @@ const mapStyle = {
     width: '100%',
     margin: '3em 0'
 };
-let map; let marker_circle;
+let map; let marker_circle; let circle_radius = config.CIRCLE_SIZE; let all_markers = [];
 
 class Map extends Component {
 
@@ -73,7 +73,6 @@ class Map extends Component {
     }
 
     // enable user geolocation
-    // TODO : deal with toggle geolocate button
     userGeolocate = () => {
         const $this = this;
 
@@ -96,13 +95,16 @@ class Map extends Component {
                     const is_user_circle = $this.props.circle[0];
 
                     if (is_user_circle) {
-                        marker_circle = new MapboxCircle({lat: user_lat, lng: user_lng}, config.CIRCLE_SIZE, {
+                        // TODO : improve fillColor field setup
+                        marker_circle = new MapboxCircle({lat: user_lat, lng: user_lng}, circle_radius, {
                             fillColor: '#29AB87'
                         }).addTo(map);
+                        $this.getMarkersInBounds(marker_circle.getCenter(), circle_radius)
                     }
                 }
             }
         });
+
     }
 
     // location search bar
@@ -164,6 +166,35 @@ class Map extends Component {
 
     updateCircleRadius = (radius) => {
         marker_circle.setRadius(radius)
+        circle_radius = radius
+        this.getMarkersInBounds(marker_circle.getCenter(), circle_radius)
+    }
+
+    getMarkersInBounds = (lat_lng, radius) => {
+        fetch('/api/markers/bounds', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                bounds: lat_lng,
+                radius: radius
+            })
+        }).then(res => res.json())
+            .then(json => {
+                if (all_markers !== undefined) {
+                    for (let marker of all_markers) {
+                        marker.remove()
+                    }
+                    all_markers = []
+                }
+                for (let marker of json) {
+                    marker = new mapBox.Marker()
+                        .setLngLat([marker.lng, marker.lat])
+                        .addTo(map);
+                    all_markers.push(marker)
+                }
+            })
     }
 
 }

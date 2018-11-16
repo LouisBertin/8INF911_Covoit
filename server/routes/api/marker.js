@@ -1,6 +1,7 @@
 let Marker = require('../../models/Marker')
 let UserSession = require('../../models/UserSession')
 let User = require('../../models/User')
+let turf = require('@turf/turf');
 
 module.exports = (app) => {
 
@@ -72,6 +73,35 @@ module.exports = (app) => {
                 message: 'Marker deleted!'
             })
         });
+    })
+
+    app.post('/api/markers/bounds', (req, res, next) => {
+
+        const {body} = req;
+        const {
+            bounds,
+            radius
+        } = body
+
+        // setup turf params
+        const From = turf.point([bounds.lat, bounds.lng]);
+        const options = {units: 'kilometers'};
+
+        // retrieve markers
+        let markers_in_bounds = [];
+        Marker.find({}, function(err, markers) {
+            for (const marker of markers) {
+                const to = turf.point([marker.lat, marker.lng]);
+                const distance = turf.distance(From, to, options) * 1000
+
+                if (distance <= radius) {
+                    markers_in_bounds.push(marker)
+                }
+            }
+
+            res.json(markers_in_bounds)
+        });
+
     })
 
 }
