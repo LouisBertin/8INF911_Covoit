@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Map.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapBox from 'mapbox-gl'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
@@ -95,9 +96,8 @@ class Map extends Component {
                     const is_user_circle = $this.props.circle[0];
 
                     if (is_user_circle) {
-                        // TODO : improve fillColor field setup
                         marker_circle = new MapboxCircle({lat: user_lat, lng: user_lng}, circle_radius, {
-                            fillColor: '#29AB87'
+                            fillColor: config.CIRCLE_COLOR
                         }).addTo(map);
                         $this.getMarkersInBounds(marker_circle.getCenter(), circle_radius)
                     }
@@ -188,11 +188,37 @@ class Map extends Component {
                     }
                     all_markers = []
                 }
+
+                // build markers json
+                let geojson = {
+                    "markers": []
+                }
                 for (let marker of json) {
-                    marker = new mapBox.Marker()
-                        .setLngLat([marker.lng, marker.lat])
-                        .addTo(map);
-                    all_markers.push(marker)
+                    marker = {
+                            "properties": {
+                                "userId": marker.userId
+                            },
+                            "geometry": {
+                                "coordinates": [
+                                    marker.lng,
+                                    marker.lat
+                                ]
+                            }
+                        }
+                    geojson.markers.push(marker)
+                }
+
+                // add marker to map
+                if (geojson.markers.length > 0) {
+                    geojson.markers.forEach(function(marker) {
+                        marker = new mapBox.Marker()
+                            .setLngLat(marker.geometry.coordinates)
+                            .setPopup(new mapBox.Popup({ offset: 25 })
+                            .setHTML(`<div>Hello World!</div>`))
+                            .addTo(map);
+
+                        all_markers.push(marker)
+                    });
                 }
             })
     }
