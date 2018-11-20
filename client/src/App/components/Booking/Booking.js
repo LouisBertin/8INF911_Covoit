@@ -83,7 +83,8 @@ class Booking extends Component {
         }).then(res => res.json())
             .then(function (json) {
                 if (json.success) {
-                    $this.closeModal()
+                    $this.closeModal();
+                    $this.props.notify('Covoit réservé!')
                 }
             })
     };

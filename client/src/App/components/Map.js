@@ -226,6 +226,7 @@ class Map extends Component {
                         ReactDOM.render(<Booking driver={marker.user}
                                                  loggedIn={$this.props.loggedIn}
                                                  markerId={marker.properties.markerId}
+                                                 notify={$this.props.notify}
                         />, placeholder);
 
                         const popup = new mapBox.Popup({ offset: 25 })
