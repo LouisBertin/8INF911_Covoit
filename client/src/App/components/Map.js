@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom'
+import Booking from './Booking/Booking'
 import './Map.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapBox from 'mapbox-gl'
@@ -244,18 +246,27 @@ class Map extends Component {
                                     marker.lng,
                                     marker.lat
                                 ]
+                            },
+                            "user": {
+                                "firstName": marker.user[0].firstName,
+                                "lastName": marker.user[0].lastName,
+                                "email": marker.user[0].email
                             }
-                        }
+                        };
                     geojson.markers.push(marker)
                 }
 
                 // add marker to map
                 if (geojson.markers.length > 0) {
                     geojson.markers.forEach(function(marker) {
+                        const placeholder = document.createElement('div');
+                        ReactDOM.render(<Booking user={marker.user}/>, placeholder);
+
+                        const popup = new mapBox.Popup({ offset: 25 })
+                            .setDOMContent(placeholder)
                         marker = new mapBox.Marker()
                             .setLngLat(marker.geometry.coordinates)
-                            .setPopup(new mapBox.Popup({ offset: 25 })
-                            .setHTML(`<div>Hello World!</div>`))
+                            .setPopup(popup)
                             .addTo(map);
 
                         all_markers.push(marker)

@@ -88,18 +88,45 @@ module.exports = (app) => {
         const options = {units: 'kilometers'};
 
         // retrieve markers
-        let markers_in_bounds = [];
-        Marker.find({}, function(err, markers) {
-            for (const marker of markers) {
-                const to = turf.point([marker.lat, marker.lng]);
-                const distance = turf.distance(From, to, options) * 1000
-
-                if (distance <= radius) {
-                    markers_in_bounds.push(marker)
-                }
+        Marker.find({}, function(err, markers){
+            if(err) {
+                console.log(err);
+                return
             }
 
-            res.json(markers_in_bounds)
+            let current_markers = [];
+            // get markers concerned by distance from the user
+            const users_ids = markers.map(function (marker) {
+                const to = turf.point([marker.lat, marker.lng]);
+                const distance = turf.distance(From, to, options) * 1000;
+
+                if (distance <= radius) {
+                    current_markers.push(marker)
+                    return marker.userId
+                }
+            });
+
+            // get user data
+            User.find({
+                '_id': { $in: users_ids}
+            }, function(err, users){
+                if(err) {
+                    console.log(err);
+                    return
+                }
+
+                let newMarkers = current_markers.map(function (marker) {
+                    let user_data = users.filter(function (user) {
+                        return String(user._id) === marker.userId;
+                    });
+                    let new_marker = marker.toJSON(); // convert to a simple JS object
+                    new_marker.user = user_data;
+
+                    return new_marker
+                });
+
+                res.json(newMarkers)
+            });
         });
 
     })
