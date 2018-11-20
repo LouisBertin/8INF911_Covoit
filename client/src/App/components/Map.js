@@ -173,6 +173,8 @@ class Map extends Component {
     }
 
     getMarkersInBounds = (lat_lng, radius) => {
+        const $this = this;
+
         fetch('/api/markers/bounds', {
             method: 'POST',
             headers: {
@@ -219,7 +221,7 @@ class Map extends Component {
                 if (geojson.markers.length > 0) {
                     geojson.markers.forEach(function(marker) {
                         const placeholder = document.createElement('div');
-                        ReactDOM.render(<Booking user={marker.user}/>, placeholder);
+                        ReactDOM.render(<Booking user={marker.user} loggedIn={$this.props.loggedIn}/>, placeholder);
 
                         const popup = new mapBox.Popup({ offset: 25 })
                             .setDOMContent(placeholder)

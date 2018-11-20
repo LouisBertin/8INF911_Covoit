@@ -50,6 +50,7 @@ class Home extends Component {
                 <Map
                     userGeolocate={true}
                     circle={this.state.slider_value}
+                    loggedIn={this.props.loggedIn}
                 />
             </div>
         )

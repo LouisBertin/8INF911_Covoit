@@ -19,13 +19,19 @@ class Booking extends Component {
 
     render() {
         const { firstName, lastName } = this.props.user;
+        const { loggedIn } = this.props;
 
         return (
             <div>
                 <p>{firstName} {lastName}</p>
-                <Button color="primary" variant="contained" onClick={this.handleButtonClick}>
-                    Réserver
-                </Button>
+
+                {
+                    (loggedIn) ? (
+                        <Button color="primary" variant="contained" onClick={this.handleButtonClick}>
+                            Réserver
+                        </Button>
+                    ) : <p style={{color: "red"}}><b>Veuillez vous connecter pour réserver</b></p>
+                }
 
                 <Dialog
                     open={this.state.open}
