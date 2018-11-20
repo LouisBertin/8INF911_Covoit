@@ -35,6 +35,7 @@ class Index extends Component {
                     ) : null
                 }
 
+
                 <Map geocoderBar={true}
                      userGeolocate={true}
                      userMarker={[true, userToken]}
