@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom'
+import Booking from './Booking/Booking'
 import './Map.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapBox from 'mapbox-gl'
@@ -216,10 +218,14 @@ class Map extends Component {
                 // add marker to map
                 if (geojson.markers.length > 0) {
                     geojson.markers.forEach(function(marker) {
+                        const placeholder = document.createElement('div');
+                        ReactDOM.render(<Booking user={marker.user}/>, placeholder);
+
+                        const popup = new mapBox.Popup({ offset: 25 })
+                            .setDOMContent(placeholder)
                         marker = new mapBox.Marker()
                             .setLngLat(marker.geometry.coordinates)
-                            .setPopup(new mapBox.Popup({ offset: 25 })
-                            .setHTML(`<div>${marker.user.firstName} ${marker.user.lastName}</div>`))
+                            .setPopup(popup)
                             .addTo(map);
 
                         all_markers.push(marker)
