@@ -4,7 +4,6 @@ import Map from "../../components/Map";
 import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
-import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Handle = Slider.Handle;
@@ -34,9 +33,8 @@ class Home extends Component {
                     userGeolocate={true}
                     circle={this.state.slider_value}
                     loggedIn={this.props.loggedIn}
-                    notify={this.notify}
+                    notify={this.props.notify}
                 />
-                <ToastContainer autoClose={3000}/>
             </div>
         )
     }
@@ -55,13 +53,6 @@ class Home extends Component {
             </Tooltip>
         );
     };
-
-    notify = (text) => {
-        toast.success(
-            text,
-            {position: toast.POSITION.BOTTOM_RIGHT},
-        );
-    }
 
     updateSlider = (value) => {
         this.setState({slider_value: [true, value]})
