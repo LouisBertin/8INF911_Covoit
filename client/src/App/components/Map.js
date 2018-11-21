@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import Booking from './Booking/Booking'
+import Delete from './Delete/Delete'
 import './Map.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapBox from 'mapbox-gl'
@@ -51,8 +52,7 @@ class Map extends Component {
             this.userGeolocate();
         if (is_user_marker)
             this.userMarker(user_token);
-        if (this.props.searchBar)
-            this.searchBar();
+
     }
 
     render() {
@@ -75,6 +75,7 @@ class Map extends Component {
                 }
             })
     }
+
 
     // enable user geolocation
     userGeolocate = () => {
@@ -149,46 +150,7 @@ class Map extends Component {
         });
     }
 
-    searchBar = () => {
-        // bind component
-        let $this = this;
-        let geocoder = new MapboxGeocoder({
-            accessToken: mapBox.accessToken
-        });
-        map.addControl(geocoder);
 
-        map.on('loaf', function () {
-            map.addSource('starting-point', {
-                "type": "geojson",
-                "data": {
-                    "type": "FeatureCollection",
-                    "features": []
-                }
-            });
-            map.addLayer({
-                "id": "point",
-                "source": "starting-point",
-                "type": "circle",
-                "paint": {
-                    "circle-radius": 10,
-                    "circle-color": "#007cbf"
-                }
-            });
-
-
-            // on geocode result
-            geocoder.on('result', function (event) {
-                const lng = event.result.center[0];
-                const lat = event.result.center[1];
-
-                map.getSource('starting-point').setData(event.result.geometry);
-                $this.props.updateLat(lat);
-                $this.props.updateLng(lng);
-            });
-
-
-        });
-    }
 
     // only display user markers
     userMarker = (token) => {
@@ -197,10 +159,19 @@ class Map extends Component {
             .then(res => res.json())
             .then(json => {
                 for (let marker of json) {
+                    const placeholder = document.createElement('div');
+                    ReactDOM.render(<Delete id={marker._id}/>, placeholder);
+                    const popup = new mapBox.Popup({offset: 25})
+                        .setDOMContent(placeholder)
                     new mapBox.Marker()
                         .setLngLat([marker.lng, marker.lat])
-                        .addTo(map);
+                        .addTo(map)
+                        .setPopup(popup)
+                    ;
+
                 }
+
+
             })
             .catch(function(err) {
                 console.log('Fetch Error : ', err);
@@ -261,7 +232,6 @@ class Map extends Component {
                     geojson.markers.forEach(function(marker) {
                         const placeholder = document.createElement('div');
                         ReactDOM.render(<Booking user={marker.user}/>, placeholder);
-
                         const popup = new mapBox.Popup({ offset: 25 })
                             .setDOMContent(placeholder)
                         marker = new mapBox.Marker()

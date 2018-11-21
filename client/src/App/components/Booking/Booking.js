@@ -19,7 +19,6 @@ class Booking extends Component {
 
     render() {
         const { firstName, lastName } = this.props.user;
-
         return (
             <div>
                 <p>{firstName} {lastName}</p>
