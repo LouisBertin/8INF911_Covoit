@@ -4,6 +4,8 @@ import Map from "../../components/Map";
 import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Handle = Slider.Handle;
 
@@ -17,9 +19,27 @@ class Home extends Component {
         }
     }
 
-    updateSlider = (value) => {
-        this.setState({slider_value: [true, value] })
-    };
+    render() {
+        return (
+            <div className="Home">
+                <Slider
+                    min={300}
+                    max={1000}
+                    step={100}
+                    defaultValue={3}
+                    handle={this.handle}
+                    onAfterChange={this.updateSlider}
+                />
+                <Map
+                    userGeolocate={true}
+                    circle={this.state.slider_value}
+                    loggedIn={this.props.loggedIn}
+                    notify={this.notify}
+                />
+                <ToastContainer autoClose={3000} />
+            </div>
+        )
+    }
 
     handle = (props) => {
         const { value, dragging, index, ...restProps } = props;
@@ -36,24 +56,16 @@ class Home extends Component {
         );
     };
 
-    render() {
-        return (
-            <div className="Home">
-                <Slider
-                    min={300}
-                    max={1000}
-                    step={100}
-                    defaultValue={3}
-                    handle={this.handle}
-                    onAfterChange={this.updateSlider}
-                />
-                <Map
-                    userGeolocate={true}
-                    circle={this.state.slider_value}
-                />
-            </div>
-        )
+    notify = (text) => {
+        toast.success(
+            text,
+            {position: toast.POSITION.BOTTOM_RIGHT},
+        );
     }
+
+    updateSlider = (value) => {
+        this.setState({slider_value: [true, value] })
+    };
 }
 
 export default Home;

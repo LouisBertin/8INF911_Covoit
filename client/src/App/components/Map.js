@@ -76,7 +76,6 @@ class Map extends Component {
             })
     }
 
-
     // enable user geolocation
     userGeolocate = () => {
         const $this = this;
@@ -89,6 +88,7 @@ class Map extends Component {
             trackUserLocation: false
         });
         map.addControl(geolocate);
+
         geolocate.on('geolocate', function(data) {
             let user_location = data.coords
             if (user_location) {
@@ -150,8 +150,6 @@ class Map extends Component {
         });
     }
 
-
-
     // only display user markers
     userMarker = (token) => {
         const url = '/api/markers/token?token=' + token;
@@ -170,8 +168,6 @@ class Map extends Component {
                     ;
 
                 }
-
-
             })
             .catch(function(err) {
                 console.log('Fetch Error : ', err);
@@ -185,6 +181,8 @@ class Map extends Component {
     }
 
     getMarkersInBounds = (lat_lng, radius) => {
+        const $this = this;
+
         fetch('/api/markers/bounds', {
             method: 'POST',
             headers: {
@@ -210,7 +208,8 @@ class Map extends Component {
                 for (let marker of json) {
                     marker = {
                             "properties": {
-                                "userId": marker.userId
+                                "userId": marker.userId,
+                                "markerId": marker._id
                             },
                             "geometry": {
                                 "coordinates": [
@@ -219,6 +218,7 @@ class Map extends Component {
                                 ]
                             },
                             "user": {
+                                "id": marker.user[0]._id,
                                 "firstName": marker.user[0].firstName,
                                 "lastName": marker.user[0].lastName,
                                 "email": marker.user[0].email
@@ -231,7 +231,12 @@ class Map extends Component {
                 if (geojson.markers.length > 0) {
                     geojson.markers.forEach(function(marker) {
                         const placeholder = document.createElement('div');
-                        ReactDOM.render(<Booking user={marker.user}/>, placeholder);
+                        ReactDOM.render(<Booking driver={marker.user}
+                                                 loggedIn={$this.props.loggedIn}
+                                                 markerId={marker.properties.markerId}
+                                                 notify={$this.props.notify}
+                        />, placeholder);
+
                         const popup = new mapBox.Popup({ offset: 25 })
                             .setDOMContent(placeholder)
                         marker = new mapBox.Marker()
