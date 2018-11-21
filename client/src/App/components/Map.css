@@ -1,3 +1,7 @@
 .mapboxgl-marker {
     cursor: pointer;
 }
+
+.mapboxgl-popup-content {
+    padding: 1.5em!important;
+}
