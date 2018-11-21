@@ -11,7 +11,8 @@ class Index extends Component {
             lng: '',
             lat: '',
             errorMsg: '',
-            userToken: ''
+            userToken: '',
+            is_mounted: true
         }
     }
 
@@ -23,7 +24,7 @@ class Index extends Component {
     };
 
     render () {
-        const { userToken, errorMsg } = this.state;
+        const { userToken, errorMsg, is_mounted } = this.state;
 
         return (
             <div>
@@ -35,15 +36,16 @@ class Index extends Component {
                     ) : null
                 }
 
+                {
+                    (is_mounted) ? (<Map geocoderBar={true}
+                                         userMarker={[true, userToken]}
+                                         updateLng={this.updateLng}
+                                         updateLat={this.updateLat}
+                    />) : null
+                }
 
-                <Map geocoderBar={true}
-                     userGeolocate={true}
-                     userMarker={[true, userToken]}
-                     updateLng={this.updateLng}
-                     updateLat={this.updateLat}
-                />
+
                 <button onClick={this.onAddMarker}>Send</button>
-
             </div>
         )
     }
@@ -54,6 +56,13 @@ class Index extends Component {
     };
     updateLat = (value) => {
         this.setState({lat: value})
+    };
+
+    mounted = () => {
+        this.setState({is_mounted: true})
+    };
+    unmounted = () => {
+        this.setState({is_mounted: false})
     };
 
     // onClick
@@ -79,7 +88,9 @@ class Index extends Component {
                 if (!json.success) {
                     this.setState({errorMsg: json.message})
                 } else {
-                    this.setState({errorMsg: 'Congratulations'})
+                    this.setState({errorMsg: 'Congratulations'});
+                    this.unmounted();
+                    this.mounted();
                 }
             })
     }

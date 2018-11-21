@@ -117,8 +117,8 @@ class Map extends Component {
         let geocoder = new MapboxGeocoder({
             accessToken: mapBox.accessToken
         });
+        // geocoder bar element
         map.addControl(geocoder);
-
         map.on('load', function() {
             map.addSource('single-point', {
                 "type": "geojson",
@@ -147,6 +147,26 @@ class Map extends Component {
                 $this.props.updateLat(lat);
                 $this.props.updateLng(lng);
             });
+        });
+
+        // geolocate user element
+        let geolocate = new mapBox.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: true
+            },
+            trackUserLocation: false
+        });
+        map.addControl(geolocate);
+
+        geolocate.on('geolocate', function(data) {
+            let user_location = data.coords
+            if (user_location) {
+                const user_lat = user_location.latitude;
+                const user_lng = user_location.longitude;
+
+                $this.props.updateLat(user_lat);
+                $this.props.updateLng(user_lng);
+            }
         });
     }
 
