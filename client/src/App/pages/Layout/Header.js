@@ -20,7 +20,7 @@ class Header extends Component {
 
                             <Link to="/"><Button>Home</Button></Link>
                             <Link to="/contact"><Button>Contact</Button></Link>
-                            <Link to="/trajet"><Button>Proposer un trajet</Button></Link>
+                            <Button>Proposer un trajet</Button>
                                 <ul>
                                     {
                                         (!this.props.loggedIn) ? (

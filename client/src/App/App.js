@@ -3,7 +3,6 @@ import {Route, Switch} from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home/Home';
 import Contact from './pages/Contact/Contact';
-import Trajet from './pages/Trajet/Trajet';
 import SignUp from "./pages/Auth/SignUp/SignUp";
 import SignIn from "./pages/Auth/SignIn/SignIn";
 import Footer from "./pages/Layout/Footer";
@@ -57,9 +56,8 @@ class App extends Component {
 
                 <main>
                     <Switch>
-                        <Route exact path='/' render={()=> <Home loggedIn={this.state.loggedIn} />} />
+                        <Route exact path='/' render={() => <Home loggedIn={this.state.loggedIn}/>}/>
                         <Route path='/contact' component={Contact}/>
-                        <Route path='/trajet' component={Trajet}/>
                         <Route path='/signup' component={SignUp}/>
                         <Route
                             path='/signin'

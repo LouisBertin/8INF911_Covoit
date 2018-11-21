@@ -4,7 +4,7 @@ import Map from "../../components/Map";
 import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
-import { ToastContainer, toast } from 'react-toastify';
+import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Handle = Slider.Handle;
@@ -36,13 +36,13 @@ class Home extends Component {
                     loggedIn={this.props.loggedIn}
                     notify={this.notify}
                 />
-                <ToastContainer autoClose={3000} />
+                <ToastContainer autoClose={3000}/>
             </div>
         )
     }
 
     handle = (props) => {
-        const { value, dragging, index, ...restProps } = props;
+        const {value, dragging, index, ...restProps} = props;
         return (
             <Tooltip
                 prefixCls="rc-slider-tooltip"
@@ -64,7 +64,7 @@ class Home extends Component {
     }
 
     updateSlider = (value) => {
-        this.setState({slider_value: [true, value] })
+        this.setState({slider_value: [true, value]})
     };
 }
 

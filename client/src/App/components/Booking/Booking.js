@@ -30,8 +30,8 @@ class Booking extends Component {
     }
 
     render() {
-        const { firstName, lastName } = this.props.driver;
-        const { loggedIn } = this.props;
+        const {firstName, lastName} = this.props.driver;
+        const {loggedIn} = this.props;
 
         return (
             <div>
