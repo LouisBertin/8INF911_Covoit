@@ -237,6 +237,7 @@ class Map extends Component {
                                     marker.lat
                                 ]
                             },
+                            "bookings": marker.booking,
                             "user": {
                                 "id": marker.user[0]._id,
                                 "firstName": marker.user[0].firstName,
@@ -251,9 +252,8 @@ class Map extends Component {
                 if (geojson.markers.length > 0) {
                     geojson.markers.forEach(function(marker) {
                         const placeholder = document.createElement('div');
-                        ReactDOM.render(<Booking driver={marker.user}
+                        ReactDOM.render(<Booking marker={marker}
                                                  loggedIn={$this.props.loggedIn}
-                                                 markerId={marker.properties.markerId}
                                                  notify={$this.props.notify}
                         />, placeholder);
 
