@@ -18,6 +18,14 @@ let map; let marker_circle; let circle_radius = config.CIRCLE_SIZE; let all_mark
 
 class Map extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            is_mounted_booking: true
+        }
+    }
+
     componentDidMount() {
         mapBox.accessToken = MAPBOX_API_TOKEN;
         // init map
@@ -31,7 +39,12 @@ class Map extends Component {
         this.propsManager()
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.is_mounted_booking !== prevState.is_mounted_booking) {
+            this.mountBooking();
+            this.getMarkersInBounds(marker_circle.getCenter(), circle_radius);
+        }
+
         if (marker_circle)
             this.updateCircleRadius(this.props.circle[1])
     }
@@ -200,6 +213,7 @@ class Map extends Component {
         this.getMarkersInBounds(marker_circle.getCenter(), circle_radius)
     }
 
+    // get markers in current bounds
     getMarkersInBounds = (lat_lng, radius) => {
         const $this = this;
 
@@ -252,10 +266,14 @@ class Map extends Component {
                 if (geojson.markers.length > 0) {
                     geojson.markers.forEach(function(marker) {
                         const placeholder = document.createElement('div');
-                        ReactDOM.render(<Booking marker={marker}
-                                                 loggedIn={$this.props.loggedIn}
-                                                 notify={$this.props.notify}
-                        />, placeholder);
+
+                        if ($this.state.is_mounted_booking) {
+                            ReactDOM.render(<Booking marker={marker}
+                                                     loggedIn={$this.props.loggedIn}
+                                                     notify={$this.props.notify}
+                                                     unMountBooking={$this.unMountBooking}
+                            />, placeholder);
+                        }
 
                         const popup = new mapBox.Popup({ offset: 25 })
                             .setDOMContent(placeholder)
@@ -268,6 +286,14 @@ class Map extends Component {
                     });
                 }
             })
+    }
+
+    // update states
+    mountBooking = () => {
+        this.setState({is_mounted_booking: true})
+    };
+    unMountBooking = () => {
+        this.setState({is_mounted_booking: false})
     }
 
 }

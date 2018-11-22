@@ -96,6 +96,7 @@ class Booking extends Component {
                 if (json.success) {
                     $this.closeModal();
                     $this.props.notify('Covoit réservé!')
+                    $this.props.unMountBooking()
                 }
             })
     };
