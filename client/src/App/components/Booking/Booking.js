@@ -78,7 +78,8 @@ class Booking extends Component {
             body: JSON.stringify({
                 user_id: this.state.token,
                 driver_id: this.props.driver.id,
-                marker_id: this.props.markerId
+                marker_id: this.props.markerId,
+
             })
         }).then(res => res.json())
             .then(function (json) {

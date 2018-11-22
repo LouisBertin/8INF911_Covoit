@@ -64,11 +64,14 @@ class App extends Component {
                             render={(props) => <SignIn {...props} loggedIn={this.loggedIn.bind(this)} />}
                         />
 
-                        {
+
                             /* Authenticated routes */
                             (this.state.loggedIn) ? (
                                 <React.Fragment>
-                                    <Route path='/user/profile' component={Index}/>
+                                    <Route
+                                        path='/user/profile'
+                                        /*component={Index}*/
+                                        render={(props) => <Index {...props} loggedIn={this.loggedIn.bind(this)}/>}/>
                                     <Route path='/user/markers/show' component={Show}/>
                                 </React.Fragment>
                             ) : null

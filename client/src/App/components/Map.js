@@ -14,7 +14,12 @@ const mapStyle = {
     width: '100%',
     margin: '3em 0'
 };
-let map; let marker_circle; let circle_radius = config.CIRCLE_SIZE; let all_markers = [];
+let map;
+let marker_circle;
+let circle_radius = config.CIRCLE_SIZE;
+let all_markers = [];
+var userlng;
+var userlat;
 
 class Map extends Component {
 
@@ -91,10 +96,12 @@ class Map extends Component {
 
         geolocate.on('geolocate', function(data) {
             let user_location = data.coords
+
             if (user_location) {
                 const user_lat = user_location.latitude;
                 const user_lng = user_location.longitude;
-
+                userlat = user_lat;
+                userlng = user_lng;
                 if ($this.props.circle) {
                     const is_user_circle = $this.props.circle[0];
 
@@ -152,13 +159,16 @@ class Map extends Component {
 
     // only display user markers
     userMarker = (token) => {
+        const $this = this;
         const url = '/api/markers/token?token=' + token;
+        console.log('In map : ' + $this.props.loggedIn);
         fetch(url)
             .then(res => res.json())
             .then(json => {
                 for (let marker of json) {
                     const placeholder = document.createElement('div');
-                    ReactDOM.render(<Delete id={marker._id}/>, placeholder);
+                    ReactDOM.render(<Delete id={marker._id} userMarker={this.userMarker} loggedIn={$this.props.loggedIn}
+                                            userlat={userlat} userlon={userlng}/>, placeholder);
                     const popup = new mapBox.Popup({offset: 25})
                         .setDOMContent(placeholder)
                     new mapBox.Marker()
@@ -168,10 +178,12 @@ class Map extends Component {
                     ;
 
                 }
+
             })
             .catch(function(err) {
                 console.log('Fetch Error : ', err);
             });
+
     }
 
     updateCircleRadius = (radius) => {
@@ -235,6 +247,7 @@ class Map extends Component {
                                                  loggedIn={$this.props.loggedIn}
                                                  markerId={marker.properties.markerId}
                                                  notify={$this.props.notify}
+                                                 lat
                         />, placeholder);
 
                         const popup = new mapBox.Popup({ offset: 25 })

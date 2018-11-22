@@ -11,7 +11,9 @@ class Index extends Component {
             lng: '',
             lat: '',
             errorMsg: '',
-            userToken: ''
+            userToken: '',
+            refresh: true
+
         }
     }
 
@@ -27,7 +29,7 @@ class Index extends Component {
 
         return (
             <div>
-                <h3>Profile page</h3>
+                <h3>Profile page {this.props.loggedIn}</h3>
 
                 {
                     (errorMsg) ? (
@@ -41,6 +43,7 @@ class Index extends Component {
                      userMarker={[true, userToken]}
                      updateLng={this.updateLng}
                      updateLat={this.updateLat}
+                     loggedIn={this.props.loggedIn}
                 />
                 <button onClick={this.onAddMarker}>Send</button>
 
@@ -82,6 +85,7 @@ class Index extends Component {
                     this.setState({errorMsg: 'Congratulations'})
                 }
             })
+        window.location.reload();
     }
 
 }

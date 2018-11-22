@@ -22,6 +22,7 @@ class Home extends Component {
     render() {
         return (
             <div className="Home">
+                <h1> {this.props.loggedIn} </h1>
                 <Slider
                     min={300}
                     max={1000}
