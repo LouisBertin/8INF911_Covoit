@@ -23,6 +23,17 @@ module.exports = (app) => {
         });
     })
 
+    app.get('/api/markers/user', (req, res) => {
+        const { token } = req.query;
+
+        UserSession.findOne({ _id: token }, function (err, user_session) {
+            const user_id = user_session.userId;
+            User.findOne({_id: user_id}, function(err, user) {
+                res.json(user)
+            });
+        });
+    })
+
     app.post('/api/markers/add', (req, res, next) => {
 
         const {body} = req;

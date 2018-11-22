@@ -1,3 +1,5 @@
+import React from "react";
+
 export function getFromStorage(key) {
     if (!key) {
         return null
@@ -24,4 +26,13 @@ export function setInStorage(key, obj) {
     } catch (e) {
         console.log(e)
     }
+}
+
+export function getUserFromToken(token) {
+    const url = '/api/markers/user?token=' + token;
+    return fetch(url)
+        .then(res => res.json())
+        .then(function (json) {
+            return json;
+        })
 }
