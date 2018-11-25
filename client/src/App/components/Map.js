@@ -115,10 +115,6 @@ class Map extends Component {
             if (user_location) {
                 const user_lat = user_location.latitude;
                 const user_lng = user_location.longitude;
-
-                this.setState({userla: user_lat});
-                this.setState({userlng: user_lng});
-                console.log("->" + this.state.userlat + "<-")
                 if ($this.props.circle) {
                     const is_user_circle = $this.props.circle[0];
 

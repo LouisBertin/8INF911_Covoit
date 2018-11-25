@@ -11,6 +11,29 @@ import {getFromStorage} from "./utils/storage";
 import Index from "./pages/profile/Index";
 import Show from "./pages/profile/markers/Show";
 import {toast, ToastContainer} from "react-toastify";
+import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            // light: will be calculated from palette.primary.main,
+            main: '#00adb5',
+            // dark: will be calculated from palette.primary.main,
+            // contrastText: will be calculated to contrast with palette.primary.main
+        },
+        secondary: {
+            light: '#0066ff',
+            main: '#fff43d',
+            // dark: will be calculated from palette.secondary.main,
+            contrastText: '#ffcc00',
+        },
+        // error: will use the default color
+        default: {
+            main: '#222831',
+        },
+    },
+});
+
 
 class App extends Component {
 
@@ -52,39 +75,41 @@ class App extends Component {
 
     render() {
         const App = () => (
-            <div className="app">
-                <Header loggedIn={this.state.loggedIn}/>
+            <MuiThemeProvider theme={theme}>
+                <div className="app">
+                    <Header loggedIn={this.state.loggedIn}/>
 
-                <main>
-                    <Switch>
-                        <Route exact path='/'
-                               render={() => <Home loggedIn={this.state.loggedIn} notify={this.notify}/>}/>
-                        <Route path='/contact' component={Contact}/>
-                        <Route path='/signup' component={SignUp}/>
-                        <Route
-                            path='/signin'
-                            render={(props) => <SignIn {...props} loggedIn={this.loggedIn.bind(this)} />}
-                        />
+                    <main>
+                        <Switch>
+                            <Route exact path='/'
+                                   render={() => <Home loggedIn={this.state.loggedIn} notify={this.notify}/>}/>
+                            <Route path='/contact' component={Contact}/>
+                            <Route path='/signup' component={SignUp}/>
+                            <Route
+                                path='/signin'
+                                render={(props) => <SignIn {...props} loggedIn={this.loggedIn.bind(this)} />}
+                            />
 
 
                             /* Authenticated routes */
                             (this.state.loggedIn) ? (
-                                <React.Fragment>
-                                    <Route
-                                        path='/user/profile'
-                                        /*component={Index}*/
-                                        render={(props) => <Index {...props} loggedIn={this.loggedIn.bind(this)}/>}/>
-                                    <Route path='/user/markers/show' component={Show}/>
-                                </React.Fragment>
+                            <React.Fragment>
+                                <Route
+                                    path='/user/profile'
+                                    /*component={Index}*/
+                                    render={(props) => <Index {...props} loggedIn={this.loggedIn.bind(this)}/>}/>
+                                <Route path='/user/markers/show' component={Show}/>
+                            </React.Fragment>
                             ) : null
-                        }
+                            }
 
-                    </Switch>
-                </main>
+                        </Switch>
+                    </main>
 
-                <Footer/>
-                <ToastContainer autoClose={3000}/>
-            </div>
+                    <Footer/>
+                    <ToastContainer autoClose={3000}/>
+                </div>
+            </MuiThemeProvider>
         )
         return (
             <Switch>
@@ -99,7 +124,6 @@ class App extends Component {
             {position: toast.POSITION.BOTTOM_RIGHT},
         );
     }
-
 }
 
 export default App;

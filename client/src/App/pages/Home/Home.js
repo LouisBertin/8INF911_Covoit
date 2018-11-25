@@ -5,7 +5,7 @@ import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Blonde from '../../images/blonde.jpg'
 const Handle = Slider.Handle;
 
 class Home extends Component {
@@ -21,7 +21,13 @@ class Home extends Component {
     render() {
         return (
             <div className="Home">
-                <h1> {this.props.loggedIn} </h1>
+                <div className={"conteneur"}>
+                    <img src={Blonde} className="blonde"/>
+                    <div className="Message">
+                        <h1> Faites vos courses pendant l'hiver en tout confort !</h1>
+                        <h2>Trouvez un covoiturage à deux pas de chez vous !</h2>
+                    </div>
+                </div>
                 <Slider
                     min={300}
                     max={1000}
