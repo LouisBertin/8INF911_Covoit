@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {getFromStorage} from "../../utils/storage";
 import Map from "../../components/Map";
+import './Index.css';
 
 class Index extends Component {
 
@@ -27,25 +28,28 @@ class Index extends Component {
         const { userToken, errorMsg, is_mounted } = this.state;
 
         return (
-            <div>
+            <div className="Profile">
                 <h3>Profile page</h3>
 
-                {
-                    (errorMsg) ? (
-                        <p>{errorMsg}</p>
-                    ) : null
-                }
+                            <div className="MAP">
 
-                {
-                    (is_mounted) ? (<Map geocoderBar={true}
-                                         userMarker={[true, userToken]}
-                                         updateLng={this.updateLng}
-                                         updateLat={this.updateLat}
-                    />) : null
-                }
+                                {
+                                    (errorMsg) ? (
+                                        <p>{errorMsg}</p>
+                                    ) : null
+                                }
+
+                                {
+                                    (is_mounted) ? (<Map geocoderBar={true}
+                                                         userMarker={[true, userToken]}
+                                                         updateLng={this.updateLng}
+                                                         updateLat={this.updateLat}
+                                    />) : null
+                                }
 
 
-                <button onClick={this.onAddMarker}>Send</button>
+                                <button onClick={this.onAddMarker} className="">Send</button>
+                            </div>
             </div>
         )
     }
