@@ -22,7 +22,7 @@ class Home extends Component {
         return (
             <div className="Home">
                 <div className={"conteneur"}>
-                    <img src={Blonde} className="blonde"/>
+                    <img src={Blonde} className="blonde" alt="Blonde regardant par la fenêtre"/>
                     <div className="Message">
                         <h1> Faites vos courses pendant l'hiver en tout confort !</h1>
                         <h2>Trouvez un covoiturage à deux pas de chez vous !</h2>
