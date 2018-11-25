@@ -7,6 +7,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Logout from "../../components/Logout/Logout";
 import './Header.css'
 
+
 class Header extends Component {
 
     render () {
@@ -16,7 +17,6 @@ class Header extends Component {
                     <Typography variant="h6" color="inherit" noWrap>
                         CoVoit
                     </Typography>
-
                     <Link to="/"><Button>Home</Button></Link>
                     <Link to="/contact"><Button>Contact</Button></Link>
                     <Button>Proposer un trajet</Button>
@@ -25,19 +25,18 @@ class Header extends Component {
                                 (!this.props.loggedIn) ? (
                                     <div>
                                         <Link to="/signup">
-                                            <Button color="primary" variant="contained" className="margin-button">Sign Up</Button>
+                                            <Button color="primary" variant="contained" className="margin-button">S'inscrire</Button>
                                         </Link>
                                         <Link to="/signin">
-                                            <Button color="primary" variant="outlined">Sign In</Button>
+                                            <Button color="primary" variant="outlined">Se connecter</Button>
                                         </Link>
                                     </div>
                                 ) :
-
                     /* Authenticated routes */
                     <div>
+                        <Link to="/user/profile"><Button>Profile</Button></Link>
+                        {/*<Link to="/user/markers/show"><Button>Markers</Button></Link>*/}
                         <Logout/>
-                        <li><Link to="/user/profile">Profile</Link></li>
-                        <li><Link to="/user/markers/show">Markers</Link></li>
                     </div>
 
                             }

@@ -23,7 +23,7 @@ class Home extends Component {
             <div className="Home">
                 <Slider
                     min={300}
-                    max={1000}
+                    max={1000}  
                     step={100}
                     defaultValue={3}
                     handle={this.handle}
