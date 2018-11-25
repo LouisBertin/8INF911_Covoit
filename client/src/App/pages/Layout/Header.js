@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Toolbar from "@material-ui/core/Toolbar";
 import Logout from "../../components/Logout/Logout";
+import Logo from './logoWebSemantique2.png'
 import './Header.css'
 
 class Header extends Component {
@@ -13,9 +14,7 @@ class Header extends Component {
         return (
             <AppBar position="static" color="default" className="Header">
                 <Toolbar>
-                    <Typography variant="h6" color="inherit" noWrap>
-                        CoVoit
-                    </Typography>
+                    <img src={Logo} className="image"/>
 
                     <Link to="/"><Button>Home</Button></Link>
                     <Link to="/contact"><Button>Contact</Button></Link>
