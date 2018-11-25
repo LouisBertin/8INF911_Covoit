@@ -25,11 +25,11 @@ module.exports = (app) => {
     })
 
     app.get('/api/markers/user', (req, res) => {
-        const { token } = req.query;
+        const {token} = req.query;
 
-        UserSession.findOne({ _id: token }, function (err, user_session) {
+        UserSession.findOne({_id: token}, function (err, user_session) {
             const user_id = user_session.userId;
-            User.findOne({_id: user_id}, function(err, user) {
+            User.findOne({_id: user_id}, function (err, user) {
                 res.json(user)
             });
         });
@@ -119,14 +119,14 @@ module.exports = (app) => {
             });
 
             // array with markers id only
-           let markers_id = current_markers.map(function (marker) {
-               return (marker._id).toString();
-           })
+            let markers_id = current_markers.map(function (marker) {
+                return (marker._id).toString();
+            })
 
             // get markers bookings
             Booking.find({
-                'markerId': { $in: markers_id}
-            }, function(err, bookings) {
+                'markerId': {$in: markers_id}
+            }, function (err, bookings) {
                 if (err) {
                     console.log(err);
                     return
@@ -134,9 +134,9 @@ module.exports = (app) => {
 
                 // retrieve marker creator aka driver
                 User.find({
-                    '_id': { $in: users_ids}
-                }, function(err, users){
-                    if(err) {
+                    '_id': {$in: users_ids}
+                }, function (err, users) {
+                    if (err) {
                         console.log(err);
                         return
                     }

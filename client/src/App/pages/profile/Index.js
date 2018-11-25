@@ -24,11 +24,11 @@ class Index extends Component {
     };
 
     render () {
-        const { userToken, errorMsg, is_mounted } = this.state;
+        const {userToken, errorMsg, is_mounted} = this.state;
 
         return (
             <div>
-                <h3>Profile page</h3>
+                <h3>Profile page </h3>
 
                 {
                     (errorMsg) ? (
@@ -41,6 +41,8 @@ class Index extends Component {
                                          userMarker={[true, userToken]}
                                          updateLng={this.updateLng}
                                          updateLat={this.updateLat}
+                                         userlat={this.state.lat}
+                                         userlng={this.state.lng}
                     />) : null
                 }
 
@@ -56,6 +58,7 @@ class Index extends Component {
     };
     updateLat = (value) => {
         this.setState({lat: value})
+
     };
 
     mounted = () => {

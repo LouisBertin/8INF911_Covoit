@@ -15,19 +15,21 @@ class Delete extends Component {
 
         this.state = {
             open: false,
-            token: null
+            token: null,
+            lat: "",
+            lng: ""
         }
     }
 
+
     componentDidMount() {
-        console.log(this.props.loggedIn);
-        console.log('Heeya')
+        console.log(this.state.lat + "++++++")
         if (this.props.loggedIn) {
-            console.log('Heeya')
+
             const obj = getFromStorage('the_main_app');
             if (obj && obj.token) {
                 this.setState({token: obj.token})
-                console.log('Heeya')
+
 
             }
         }
@@ -36,7 +38,7 @@ class Delete extends Component {
     render() {
         return (
             <div>
-                <h6> {this.props.userlng}</h6>
+                <h6>ss {this.props.lat}</h6>
                 <Button variant="contained" color="Primary" onClick={this.handleButtonClick}>Trajet</Button>
                 <Button variant="contained" color="secondary" onClick={this.handleButtonClick}>Supprimer</Button>
                 <Dialog
@@ -62,6 +64,13 @@ class Delete extends Component {
         this.openModal()
     };
 
+    updateLngDel = (value) => {
+        this.setState({lng: value})
+    };
+    updateLatDel = (value) => {
+        this.setState({lat: value})
+
+    };
     openModal = () => {
         this.setState({open: true})
     };

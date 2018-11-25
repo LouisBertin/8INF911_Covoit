@@ -20,7 +20,6 @@ class Header extends Component {
                     <Link to="/"><Button>Home</Button></Link>
                     <Link to="/contact"><Button>Contact</Button></Link>
                     <Button>Proposer un trajet</Button>
-                        <ul>
                             {
                                 (!this.props.loggedIn) ? (
                                     <div>
@@ -35,13 +34,14 @@ class Header extends Component {
 
                     /* Authenticated routes */
                     <div>
+
+                        <Link to="/user/profile"><Button>Profile </Button></Link>
+                        <Link to="/user/markers/show"><Button>Markers</Button></Link>
                         <Logout/>
-                        <li><Link to="/user/profile">Profile</Link></li>
-                        <li><Link to="/user/markers/show">Markers</Link></li>
                     </div>
 
                             }
-                        </ul>
+
 
                 </Toolbar>
             </AppBar>

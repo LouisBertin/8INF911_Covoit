@@ -18,8 +18,7 @@ let map;
 let marker_circle;
 let circle_radius = config.CIRCLE_SIZE;
 let all_markers = [];
-var userlng;
-var userlat;
+
 
 class Map extends Component {
 
@@ -27,7 +26,10 @@ class Map extends Component {
         super(props);
 
         this.state = {
-            is_mounted_booking: true
+            is_mounted_booking: true,
+            lat: '',
+            lng: ''
+
         }
     }
 
@@ -49,6 +51,7 @@ class Map extends Component {
             this.mountBooking();
             this.getMarkersInBounds(marker_circle.getCenter(), circle_radius);
         }
+
 
         if (marker_circle)
             this.updateCircleRadius(this.props.circle[1])
@@ -106,14 +109,16 @@ class Map extends Component {
             trackUserLocation: false
         });
         map.addControl(geolocate);
-
+        console.log("->" + this.state.userlat + "<-")
         geolocate.on('geolocate', function(data) {
             let user_location = data.coords
             if (user_location) {
                 const user_lat = user_location.latitude;
                 const user_lng = user_location.longitude;
-                userlat = user_lat;
-                userlng = user_lng;
+
+                this.setState({userla: user_lat});
+                this.setState({userlng: user_lng});
+                console.log("->" + this.state.userlat + "<-")
                 if ($this.props.circle) {
                     const is_user_circle = $this.props.circle[0];
 
@@ -165,6 +170,7 @@ class Map extends Component {
                 map.getSource('single-point').setData(event.result.geometry);
                 $this.props.updateLat(lat);
                 $this.props.updateLng(lng);
+
             });
         });
 
@@ -177,30 +183,31 @@ class Map extends Component {
         });
         map.addControl(geolocate);
 
-        geolocate.on('geolocate', function(data) {
+        geolocate.on('geolocate', function (data) {
             let user_location = data.coords
             if (user_location) {
                 const user_lat = user_location.latitude;
                 const user_lng = user_location.longitude;
-
                 $this.props.updateLat(user_lat);
                 $this.props.updateLng(user_lng);
+
             }
         });
+        this.setState({lat: this.props.userlat, lng: this.props.userlng});
     }
 
     // only display user markers
     userMarker = (token) => {
         const $this = this;
         const url = '/api/markers/token?token=' + token;
-        console.log('In map : ' + $this.props.loggedIn);
         fetch(url)
             .then(res => res.json())
             .then(json => {
                 for (let marker of json) {
                     const placeholder = document.createElement('div');
                     ReactDOM.render(<Delete id={marker._id} userMarker={this.userMarker} loggedIn={$this.props.loggedIn}
-                                            userlat={userlat} userlon={userlng}/>, placeholder);
+                                            lat={$this.state.lat} lng={$this.state.lng}
+                    />, placeholder);
                     const popup = new mapBox.Popup({offset: 25})
                         .setDOMContent(placeholder)
                     new mapBox.Marker()
@@ -262,7 +269,7 @@ class Map extends Component {
                                     marker.lat
                                 ]
                             },
-                            "bookings": marker.booking,
+                        "bookings": marker.booking,
                             "user": {
                                 "id": marker.user[0]._id,
                                 "firstName": marker.user[0].firstName,

@@ -57,7 +57,8 @@ class App extends Component {
 
                 <main>
                     <Switch>
-                        <Route exact path='/' render={() => <Home loggedIn={this.state.loggedIn} notify={this.notify}/>}/>
+                        <Route exact path='/'
+                               render={() => <Home loggedIn={this.state.loggedIn} notify={this.notify}/>}/>
                         <Route path='/contact' component={Contact}/>
                         <Route path='/signup' component={SignUp}/>
                         <Route

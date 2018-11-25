@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import {getFromStorage} from "../../utils/storage";
+
 const config = require('../../utils/storage')
 
 const overrideStyles = {

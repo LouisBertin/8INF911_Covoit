@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {getFromStorage} from "../../utils/storage";
+import Button from "@material-ui/core/Button";
 const config = require('../../utils/config')
 
 class Logout extends Component {
@@ -23,7 +24,7 @@ class Logout extends Component {
 
     render() {
         return (
-            <button onClick={this.onLogOut}>Logout</button>
+            <Button color="primary" variant="contained" onClick={this.onLogOut}>Logout</Button>
         );
     }
 
