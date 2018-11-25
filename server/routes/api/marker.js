@@ -2,6 +2,7 @@ let Marker = require('../../models/Marker')
 let UserSession = require('../../models/UserSession')
 let User = require('../../models/User')
 let turf = require('@turf/turf');
+let Booking = require('../../models/Booking')
 
 module.exports = (app) => {
 
@@ -20,6 +21,17 @@ module.exports = (app) => {
                 Marker.find({userId: user_id}, function(err, markers) {
                     res.json(markers)
                 });
+        });
+    })
+
+    app.get('/api/markers/user', (req, res) => {
+        const { token } = req.query;
+
+        UserSession.findOne({ _id: token }, function (err, user_session) {
+            const user_id = user_session.userId;
+            User.findOne({_id: user_id}, function(err, user) {
+                res.json(user)
+            });
         });
     })
 
@@ -106,26 +118,48 @@ module.exports = (app) => {
                 }
             });
 
-            // get user data
-            User.find({
-                '_id': { $in: users_ids}
-            }, function(err, users){
-                if(err) {
+            // array with markers id only
+           let markers_id = current_markers.map(function (marker) {
+               return (marker._id).toString();
+           })
+
+            // get markers bookings
+            Booking.find({
+                'markerId': { $in: markers_id}
+            }, function(err, bookings) {
+                if (err) {
                     console.log(err);
                     return
                 }
 
-                let newMarkers = current_markers.map(function (marker) {
-                    let user_data = users.filter(function (user) {
-                        return String(user._id) === marker.userId;
+                // retrieve marker creator aka driver
+                User.find({
+                    '_id': { $in: users_ids}
+                }, function(err, users){
+                    if(err) {
+                        console.log(err);
+                        return
+                    }
+
+                    let newMarkers = current_markers.map(function (marker) {
+                        // attach driver data to marker he has created
+                        let user_data = users.filter(function (user) {
+                            return String(user._id) === marker.userId;
+                        });
+                        // attach booking data to current marker
+                        let booking_data = bookings.filter(function (booking) {
+                            return booking.markerId === String(marker._id)
+                        });
+
+                        let new_marker = marker.toJSON(); // convert to a simple JS object
+                        new_marker.user = user_data;
+                        new_marker.booking = booking_data;
+
+                        return new_marker
                     });
-                    let new_marker = marker.toJSON(); // convert to a simple JS object
-                    new_marker.user = user_data;
 
-                    return new_marker
+                    res.json(newMarkers)
                 });
-
-                res.json(newMarkers)
             });
         });
 

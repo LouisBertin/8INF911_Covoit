@@ -23,6 +23,14 @@ var userlat;
 
 class Map extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            is_mounted_booking: true
+        }
+    }
+
     componentDidMount() {
         mapBox.accessToken = MAPBOX_API_TOKEN;
         // init map
@@ -36,7 +44,12 @@ class Map extends Component {
         this.propsManager()
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.is_mounted_booking !== prevState.is_mounted_booking) {
+            this.mountBooking();
+            this.getMarkersInBounds(marker_circle.getCenter(), circle_radius);
+        }
+
         if (marker_circle)
             this.updateCircleRadius(this.props.circle[1])
     }
@@ -96,7 +109,6 @@ class Map extends Component {
 
         geolocate.on('geolocate', function(data) {
             let user_location = data.coords
-
             if (user_location) {
                 const user_lat = user_location.latitude;
                 const user_lng = user_location.longitude;
@@ -124,8 +136,8 @@ class Map extends Component {
         let geocoder = new MapboxGeocoder({
             accessToken: mapBox.accessToken
         });
+        // geocoder bar element
         map.addControl(geocoder);
-
         map.on('load', function() {
             map.addSource('single-point', {
                 "type": "geojson",
@@ -154,6 +166,26 @@ class Map extends Component {
                 $this.props.updateLat(lat);
                 $this.props.updateLng(lng);
             });
+        });
+
+        // geolocate user element
+        let geolocate = new mapBox.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: true
+            },
+            trackUserLocation: false
+        });
+        map.addControl(geolocate);
+
+        geolocate.on('geolocate', function(data) {
+            let user_location = data.coords
+            if (user_location) {
+                const user_lat = user_location.latitude;
+                const user_lng = user_location.longitude;
+
+                $this.props.updateLat(user_lat);
+                $this.props.updateLng(user_lng);
+            }
         });
     }
 
@@ -192,6 +224,7 @@ class Map extends Component {
         this.getMarkersInBounds(marker_circle.getCenter(), circle_radius)
     }
 
+    // get markers in current bounds
     getMarkersInBounds = (lat_lng, radius) => {
         const $this = this;
 
@@ -229,6 +262,7 @@ class Map extends Component {
                                     marker.lat
                                 ]
                             },
+                            "bookings": marker.booking,
                             "user": {
                                 "id": marker.user[0]._id,
                                 "firstName": marker.user[0].firstName,
@@ -243,12 +277,14 @@ class Map extends Component {
                 if (geojson.markers.length > 0) {
                     geojson.markers.forEach(function(marker) {
                         const placeholder = document.createElement('div');
-                        ReactDOM.render(<Booking driver={marker.user}
-                                                 loggedIn={$this.props.loggedIn}
-                                                 markerId={marker.properties.markerId}
-                                                 notify={$this.props.notify}
-                                                 lat
-                        />, placeholder);
+
+                        if ($this.state.is_mounted_booking) {
+                            ReactDOM.render(<Booking marker={marker}
+                                                     loggedIn={$this.props.loggedIn}
+                                                     notify={$this.props.notify}
+                                                     unMountBooking={$this.unMountBooking}
+                            />, placeholder);
+                        }
 
                         const popup = new mapBox.Popup({ offset: 25 })
                             .setDOMContent(placeholder)
@@ -261,6 +297,14 @@ class Map extends Component {
                     });
                 }
             })
+    }
+
+    // update states
+    mountBooking = () => {
+        this.setState({is_mounted_booking: true})
+    };
+    unMountBooking = () => {
+        this.setState({is_mounted_booking: false})
     }
 
 }

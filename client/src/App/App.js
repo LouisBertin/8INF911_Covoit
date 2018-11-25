@@ -10,6 +10,7 @@ import Header from "./pages/Layout/Header";
 import {getFromStorage} from "./utils/storage";
 import Index from "./pages/profile/Index";
 import Show from "./pages/profile/markers/Show";
+import {toast, ToastContainer} from "react-toastify";
 
 class App extends Component {
 
@@ -56,7 +57,7 @@ class App extends Component {
 
                 <main>
                     <Switch>
-                        <Route exact path='/' render={() => <Home loggedIn={this.state.loggedIn}/>}/>
+                        <Route exact path='/' render={() => <Home loggedIn={this.state.loggedIn} notify={this.notify}/>}/>
                         <Route path='/contact' component={Contact}/>
                         <Route path='/signup' component={SignUp}/>
                         <Route
@@ -81,6 +82,7 @@ class App extends Component {
                 </main>
 
                 <Footer/>
+                <ToastContainer autoClose={3000}/>
             </div>
         )
         return (
@@ -89,6 +91,14 @@ class App extends Component {
             </Switch>
         );
     }
+
+    notify = (text) => {
+        toast.success(
+            text,
+            {position: toast.POSITION.BOTTOM_RIGHT},
+        );
+    }
+
 }
 
 export default App;
