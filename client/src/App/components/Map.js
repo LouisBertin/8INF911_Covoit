@@ -45,7 +45,7 @@ class Map extends Component {
             this.getMarkersInBounds(marker_circle.getCenter(), circle_radius);
         }
 
-        if (marker_circle)
+        if (marker_circle && this.props.circle !== undefined)
             this.updateCircleRadius(this.props.circle[1])
     }
 
