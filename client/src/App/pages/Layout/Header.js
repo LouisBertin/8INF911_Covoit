@@ -13,12 +13,14 @@ class Header extends Component {
         return (
             <AppBar position="static" color="default" className="Header">
                 <Toolbar>
-                    <img src={Logo} className="LogoSite" alt = "Logo"/>
-                    <Link to="/"><Button>Home</Button></Link>
-{/*
+                    <div>
+                        <img src={Logo} className="LogoSite" alt = "Logo"/>
+                        <Link to="/"><Button>Home</Button></Link>
+                        {/*
                     <Link to="/contact"><Button>Contact</Button></Link>
 */}
-                    <a href="#MapCenter"><Button>Proposer un trajet</Button></a>
+                        <a href="#MapCenter"><Button>Proposer un trajet</Button></a>
+                    </div>
                     <ul className="auth-routes">
                         {
                             (!this.props.loggedIn) ? (
