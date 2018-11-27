@@ -50,7 +50,8 @@ class MyBooking extends Component {
                         (bookings) ? bookings.map((booking) =>
                             <li key={booking._id}>
                                 <span>Covoit avec {booking.driver.firstName} {booking.driver.lastName} !</span><br/>
-                                <span>Départ : {booking.place_info.place_name}</span>
+                                <span>Départ : {booking.marker.placeStart.place_name}</span><br/>
+                                <span>Arrivée : {booking.marker.placeEnd.place_name}</span>
                             </li>
                         ) : null
                     }

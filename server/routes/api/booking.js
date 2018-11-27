@@ -1,8 +1,6 @@
 let Booking = require('../../models/Booking')
 let Marker = require('../../models/Marker')
 let User = require('../../models/User')
-const config = require('../../../config/config')
-const axios = require('axios');
 
 module.exports = (app) => {
 
@@ -52,14 +50,10 @@ module.exports = (app) => {
                         return obj
                     });
 
-                // fetch place info with marker coordinates
-                const place_info = await placeData(marker.lng, marker.lat);
-
                 // attached data to booking
                 let new_booking = booking.toJSON();
                 new_booking.marker = marker;
                 new_booking.driver = driver;
-                new_booking.place_info = place_info;
 
                 return new_booking
             });
@@ -70,18 +64,5 @@ module.exports = (app) => {
             });
         })
     })
-
-    app.get('/api/booking/test', async (req, res) => {
-
-        const place = await placeData(-71.1244, 48.4377)
-        console.log(place)
-
-        res.json('hello world')
-    })
-
-    async function placeData(lng, lat) {
-        const response = await axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=` + config.mapboxToken)
-        return response.data.features[0]
-    }
 
 }
