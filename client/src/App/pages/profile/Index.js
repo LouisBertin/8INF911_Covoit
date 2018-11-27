@@ -38,7 +38,7 @@ class Index extends Component {
 
         return (
             <div className="Profile">
-                <h3>Profile page</h3>
+                <h3>Gérer vos marqueurs</h3>
                 <div className="MAP">
 
                     {
