@@ -3,12 +3,6 @@
     background-color: black;
 }
 
-.auth-routes {
-    position: absolute;
-    top: 12px;
-    right: 10px;
-}
-
 .overlay {
     height: 100%;
     width: 100%;
@@ -20,11 +14,20 @@
 }
 
 .LogoSite {
-
-    height: 90px;
+    max-width: 100px;
 }
 
 .Message1, .Message2 {
     font-family: 'Roboto', sans-serif;
+}
+
+.MuiToolbar-root-37 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.MuiToolbar-root-37 > div {
+    display: flex;
+    align-items: center;
 }
 

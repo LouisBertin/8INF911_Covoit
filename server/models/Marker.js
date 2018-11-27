@@ -4,7 +4,9 @@ const MarkerSchema = new mongoose.Schema({
     lng: Number,
     lat: Number,
     userId: String,
-    latLngEnd: Object
+    latLngEnd: Object,
+    placeStart: Object,
+    placeEnd: Object
 });
 
 module.exports = mongoose.model('Marker', MarkerSchema);
