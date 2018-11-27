@@ -16,7 +16,7 @@ class Header extends Component {
                 <Toolbar>
                     <img src={Logo} className="LogoSite" alt = "Logo"/>
                     <Link to="/"><Button>Home</Button></Link>
-                    <Link to="/contact"><Button>Contact</Button></Link>
+                    {/*<Link to="/contact"><Button>Contact</Button></Link>*/}
                    <a href="#MapCenter"><Button>Proposer un trajet</Button></a>
                         <ul>
                             {
@@ -32,7 +32,9 @@ class Header extends Component {
                                 ) :
                     /* Authenticated routes */
                     <div>
-                        <Link to="/user/profile"><Button>Profile</Button></Link>
+                        <Link to="/user/profile">
+                            <Button>Profile</Button>
+                        </Link>
                         {/*<Link to="/user/markers/show"><Button>Markers</Button></Link>*/}
                         <Logout/>
                     </div>
