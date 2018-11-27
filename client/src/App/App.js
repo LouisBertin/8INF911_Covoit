@@ -55,7 +55,7 @@ class App extends Component {
             <div className="app">
                 <Header loggedIn={this.state.loggedIn}/>
 
-                <main>
+                <main className="SiteContent">
                     <Switch>
                         <Route exact path='/' render={() => <Home loggedIn={this.state.loggedIn} notify={this.notify}/>}/>
                         <Route path='/contact' component={Contact}/>

@@ -1,9 +1,16 @@
 .app nav {
     display: flex;
     justify-content: space-around;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
 .app > div {
     width: 80%;
     margin: auto;
+}
+
+.SiteContent{
+    flex: 1;
 }
