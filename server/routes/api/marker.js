@@ -41,7 +41,8 @@ module.exports = (app) => {
         const {
             lat,
             lng,
-            token
+            token,
+            latLngEnd
         } = body;
 
         // TODO: express validator ?
@@ -58,7 +59,8 @@ module.exports = (app) => {
                 let marker = new Marker({
                     lng: lng,
                     lat: lat,
-                    userId: user._id
+                    userId: user._id,
+                    latLngEnd: latLngEnd
                 });
                 marker.save();
             });

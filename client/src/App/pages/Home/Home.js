@@ -23,6 +23,7 @@ class Home extends Component {
         return (
             <div className="Home">
                 <div className="ImgAccueil">
+                    <div className="overlay"></div>
                     <img src={Route} className="Route" alt="Route sur une belle vue"/>
                     <div className="Message1">
                         <h1> Faites vos courses pendant l'hiver en tout confort !</h1>

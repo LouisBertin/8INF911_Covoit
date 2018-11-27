@@ -1,7 +1,22 @@
 .margin-button {
     margin: 0 1em!important;
     background-color: black;
-    justify-content: flex-end;
+}
+
+.auth-routes {
+    position: absolute;
+    top: 12px;
+    right: 10px;
+}
+
+.overlay {
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
 }
 
 .LogoSite {
@@ -9,5 +24,7 @@
     height: 90px;
 }
 
-
+.Message1, .Message2 {
+    font-family: 'Roboto', sans-serif;
+}
 
