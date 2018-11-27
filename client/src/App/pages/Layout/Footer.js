@@ -4,13 +4,14 @@ import Img from 'react-image';
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import './Footer.css'
+
 class Footer extends Component {
 
     render () {
         return (
-            <Fragment>
-                <hr/>
-                <footer>
+            <footer className="footer-component">
+                <div>
                     <Grid container spacing={0} justify="center">
                         <Grid item xs>
                             <Typography variant="h5" color="textPrimary" gutterBottom>
@@ -68,8 +69,8 @@ class Footer extends Component {
                             </List>
                         </Grid>
                     </Grid>
-                </footer>
-            </Fragment>
+                </div>
+            </footer>
         )
     }
 
