@@ -5,6 +5,7 @@ import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
 import 'react-toastify/dist/ReactToastify.css';
+import Route from '../../Images/Img-front.jpg'
 
 const Handle = Slider.Handle;
 
@@ -21,20 +22,32 @@ class Home extends Component {
     render() {
         return (
             <div className="Home">
-                <Slider
-                    min={300}
-                    max={1000}  
-                    step={100}
-                    defaultValue={3}
-                    handle={this.handle}
-                    onAfterChange={this.updateSlider}
-                />
-                <Map
-                    userGeolocate={true}
-                    circle={this.state.slider_value}
-                    loggedIn={this.props.loggedIn}
-                    notify={this.props.notify}
-                />
+                <div className="ImgAccueil">
+                    <img src={Route} className="Route" alt="Route sur une belle vue"/>
+                    <div className="Message1">
+                        <h1> Faites vos courses pendant l'hiver en tout confort !</h1>
+                        <h2>Trouvez un covoiturage à deux pas de chez vous !</h2>
+                    </div>
+                </div>
+                <div className="Message2">
+                    <h1> Pour commencer, selectionner un conducteur ci-dessous ! </h1>
+                </div>
+                <div className="MapHome" id="MapCenter">
+                    <Slider
+                        min={300}
+                        max={1000}
+                        step={100}
+                        defaultValue={3}
+                        handle={this.handle}
+                        onAfterChange={this.updateSlider}
+                    />
+                    <Map
+                        userGeolocate={true}
+                        circle={this.state.slider_value}
+                        loggedIn={this.props.loggedIn}
+                        notify={this.props.notify}
+                    />
+                </div>
             </div>
         )
     }

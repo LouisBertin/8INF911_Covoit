@@ -1,4 +1,14 @@
 .margin-button {
     margin: 0 1em!important;
     background-color: black;
+    justify-content: flex-end;
+}
+
+.LogoSite {
+    width: 90px;
+    height: 90px;
+}
+
+.Header {
+    background-color: indigo ;
 }

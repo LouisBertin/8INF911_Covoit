@@ -1,3 +1,30 @@
 .Home {
-  margin: 10em;
+  margin: 0em;
+}
+
+.Route{
+    max-width: 100%;
+}
+
+.ImgAccueil{
+    position: relative;
+}
+
+
+.Message1 {
+    position: absolute;
+    top: 10%;
+    left: 60%;
+    color: white;
+    font-family: "Open Sans";
+}
+
+.Message2 {
+    text-align: center;
+    color: #1e5799;
+    font-family: "Open Sans"
+}
+
+.MapHome{
+    margin: 3em;
 }
