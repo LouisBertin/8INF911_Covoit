@@ -18,7 +18,7 @@ class Header extends Component {
 {/*
                     <Link to="/contact"><Button>Contact</Button></Link>
 */}
-                    <a href="#MapCenter"><Button>Proposer un trajet</Button></a>
+                    <a href="#MapCenter"><Button>Faire mon épicerie</Button></a>
                     <ul className="auth-routes">
                         {
                             (!this.props.loggedIn) ? (
