@@ -69,7 +69,7 @@ class App extends Component {
                             /* Authenticated routes */
                             (this.state.loggedIn) ? (
                                 <React.Fragment>
-                                    <Route path='/user/profile' component={Index}/>
+                                    <Route path='/user/profile' render={() => <Index notify={this.notify}/>}/>
                                     <Route path='/user/markers/show' component={Show}/>
                                 </React.Fragment>
                             ) : null

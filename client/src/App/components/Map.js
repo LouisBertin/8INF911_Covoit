@@ -157,8 +157,16 @@ class Map extends Component {
                 const lat = event.result.center[1];
 
                 map.getSource('single-point').setData(event.result.geometry);
+
+                if ($this.props.firstLat) {
+                    $this.props.updateLatLngEnd({lat, lng});
+
+                    return false
+                }
+
                 $this.props.updateLat(lat);
                 $this.props.updateLng(lng);
+                $this.props.notify('Sélectionnez une nouvelle place!')
             });
         });
 
@@ -179,6 +187,8 @@ class Map extends Component {
 
                 $this.props.updateLat(user_lat);
                 $this.props.updateLng(user_lng);
+
+                $this.props.notify('Sélectionnez une nouvelle place!');
             }
         });
     }
@@ -193,7 +203,7 @@ class Map extends Component {
                     const placeholder = document.createElement('div');
                     ReactDOM.render(<Delete id={marker._id}/>, placeholder);
                     const popup = new mapBox.Popup({offset: 25})
-                        .setDOMContent(placeholder)
+                        .setDOMContent(placeholder);
                     new mapBox.Marker()
                         .setLngLat([marker.lng, marker.lat])
                         .addTo(map)
