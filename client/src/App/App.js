@@ -110,7 +110,7 @@ class App extends Component {
                     <ToastContainer autoClose={3000}/>
                 </div>
             </MuiThemeProvider>
-        )
+        );
         return (
             <Switch>
                 <App/>

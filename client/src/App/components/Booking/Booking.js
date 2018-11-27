@@ -3,12 +3,12 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import {getFromStorage} from "../../utils/storage";
 
-const config = require('../../utils/storage')
+const config = require('../../utils/storage');
 
 const overrideStyles = {
     padding: "5em",
     margin: "5em"
-}
+};
 
 class Booking extends Component {
 
@@ -27,7 +27,7 @@ class Booking extends Component {
             const obj = getFromStorage('the_main_app');
 
             if (obj && obj.token) {
-                this.setState({token: obj.token})
+                this.setState({token: obj.token});
                 config.getUserFromToken(obj.token).then((user) => {
                     this.setState({current_user: user})
                 })
@@ -96,7 +96,7 @@ class Booking extends Component {
             .then(function (json) {
                 if (json.success) {
                     $this.closeModal();
-                    $this.props.notify('Covoit réservé!')
+                    $this.props.notify('Covoit réservé!');
                     $this.props.unMountBooking()
                 }
             })

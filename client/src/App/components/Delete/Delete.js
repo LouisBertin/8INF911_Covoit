@@ -38,7 +38,7 @@ class Delete extends Component {
     render() {
         return (
             <div>
-                <h6>ss {this.props.lat}</h6>
+
                 <Button variant="contained" color="Primary" onClick={this.handleButtonClick}>Trajet</Button>
                 <Button variant="contained" color="secondary" onClick={this.handleButtonClick}>Supprimer</Button>
                 <Dialog

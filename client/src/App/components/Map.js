@@ -27,8 +27,6 @@ class Map extends Component {
 
         this.state = {
             is_mounted_booking: true,
-            lat: '',
-            lng: ''
 
         }
     }
@@ -53,7 +51,7 @@ class Map extends Component {
         }
 
 
-        if (marker_circle)
+        if (marker_circle && this.props.circle !== undefined)
             this.updateCircleRadius(this.props.circle[1])
     }
 
@@ -109,7 +107,7 @@ class Map extends Component {
             trackUserLocation: false
         });
         map.addControl(geolocate);
-        console.log("->" + this.state.userlat + "<-")
+
         geolocate.on('geolocate', function(data) {
             let user_location = data.coords
             if (user_location) {
@@ -140,6 +138,7 @@ class Map extends Component {
         // geocoder bar element
         map.addControl(geocoder);
         map.on('load', function() {
+
             map.addSource('single-point', {
                 "type": "geojson",
                 "data": {
@@ -163,11 +162,12 @@ class Map extends Component {
                 const lng = event.result.center[0];
                 const lat = event.result.center[1];
 
-                map.getSource('single-point').setData(event.result.geometry);
+
                 $this.props.updateLat(lat);
                 $this.props.updateLng(lng);
 
-            });
+            })
+
         });
 
         // geolocate user element
@@ -189,7 +189,7 @@ class Map extends Component {
 
             }
         });
-        this.setState({lat: this.props.userlat, lng: this.props.userlng});
+
     }
 
     // only display user markers
