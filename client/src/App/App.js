@@ -9,8 +9,8 @@ import Footer from "./pages/Layout/Footer";
 import Header from "./pages/Layout/Header";
 import {getFromStorage} from "./utils/storage";
 import Index from "./pages/profile/Index";
-import Show from "./pages/profile/markers/Show";
 import {toast, ToastContainer} from "react-toastify";
+import MyBooking from "./pages/MyBooking/MyBooking";
 
 class App extends Component {
 
@@ -70,7 +70,7 @@ class App extends Component {
                             (this.state.loggedIn) ? (
                                 <React.Fragment>
                                     <Route path='/user/profile' render={() => <Index notify={this.notify}/>}/>
-                                    <Route path='/user/markers/show' component={Show}/>
+                                    <Route path='/user/mybookings' component={MyBooking}/>
                                 </React.Fragment>
                             ) : null
                         }

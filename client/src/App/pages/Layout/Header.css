@@ -2,3 +2,9 @@
     margin: 0 1em!important;
     background-color: black;
 }
+
+.auth-routes {
+    position: absolute;
+    top: 0;
+    right: 10px;
+}

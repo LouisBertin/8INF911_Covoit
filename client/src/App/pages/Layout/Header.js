@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
@@ -10,7 +10,7 @@ import './Header.css'
 
 class Header extends Component {
 
-    render () {
+    render() {
         return (
             <AppBar position="static" color="default" className="Header">
                 <Toolbar>
@@ -20,27 +20,28 @@ class Header extends Component {
                     <Link to="/"><Button>Home</Button></Link>
                     <Link to="/contact"><Button>Contact</Button></Link>
                     <Button>Proposer un trajet</Button>
-                        <ul>
-                            {
-                                (!this.props.loggedIn) ? (
+                    <ul className="auth-routes">
+                        {
+                            (!this.props.loggedIn) ? (
                                     <div>
                                         <Link to="/signup">
-                                            <Button color="primary" variant="contained" className="margin-button">S'inscrire</Button>
+                                            <Button color="primary" variant="contained"
+                                                    className="margin-button">S'inscrire</Button>
                                         </Link>
                                         <Link to="/signin">
                                             <Button color="primary" variant="outlined">Se connecter</Button>
                                         </Link>
                                     </div>
                                 ) :
-                    /* Authenticated routes */
-                    <div>
-                        <Link to="/user/profile"><Button>Profile</Button></Link>
-                        {/*<Link to="/user/markers/show"><Button>Markers</Button></Link>*/}
-                        <Logout/>
-                    </div>
+                                /* Authenticated routes */
+                                <div>
+                                    <Link to="/user/profile"><Button>Admin</Button></Link>
+                                    <Link to="/user/mybookings"><Button>Mes Réservations</Button></Link>
+                                    <Logout/>
+                                </div>
 
-                            }
-                        </ul>
+                        }
+                    </ul>
 
                 </Toolbar>
             </AppBar>
