@@ -1,13 +1,10 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {getFromStorage, setInStorage} from "../../../utils/storage";
 import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import './SignIn.css'
 
@@ -52,7 +49,7 @@ class SignIn extends Component {
 
         this.state = {
             isLoading: true,
-            token : '',
+            token: '',
             signInError: '',
             // signIn
             signInEmail: '',
@@ -64,7 +61,7 @@ class SignIn extends Component {
         const obj = getFromStorage('the_main_app');
 
         if (obj && obj.token) {
-            const { token } = obj;
+            const {token} = obj;
 
             fetch('/api/account/verify?token=' + token)
                 .then(res => res.json())
@@ -96,6 +93,8 @@ class SignIn extends Component {
         this.setState({signInPassword: event.target.value})
     };
     onSignIn = (event) => {
+        event.preventDefault();
+
         const {
             signInEmail,
             signInPassword,
@@ -113,7 +112,7 @@ class SignIn extends Component {
         }).then(res => res.json())
             .then(json => {
                 if (json.success) {
-                    setInStorage('the_main_app', { token: json.token })
+                    setInStorage('the_main_app', {token: json.token})
                     this.setState({
                         signInError: json.message,
                         token: json.token
@@ -128,7 +127,7 @@ class SignIn extends Component {
     }
 
     render() {
-        const { isLoading, token, signInError, signInEmail, signInPassword } = this.state;
+        const {isLoading, token, signInError, signInEmail, signInPassword} = this.state;
 
         if (isLoading) {
             return (
@@ -147,31 +146,32 @@ class SignIn extends Component {
                             ) : null
                         }
                         <Paper className="lll">
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="email">Adresse e-mail</InputLabel>
-                            <Input
-                                type="email"
-                                name="email"
-                                value={signInEmail}
-                                onChange={this.handleSignInEmail}
-                            />
-                        </FormControl>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="password">Mot de passe</InputLabel>
-                            <Input
-                                type="password"
-                                name="password"
-                                value={signInPassword}
-                                onChange={this.handleSignInPassword}
-                            />
-                        </FormControl>
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
-                        <Button onClick={this.onSignIn}  fullWidth
-                                variant="contained"
-                                color="primary">Sign in</Button>
+
+                            <form onSubmit={this.onSignIn}>
+                                <FormControl margin="normal" required fullWidth>
+                                    <InputLabel htmlFor="email">Adresse e-mail</InputLabel>
+                                    <Input
+                                        type="email"
+                                        name="email"
+                                        value={signInEmail}
+                                        onChange={this.handleSignInEmail}
+                                    />
+                                </FormControl>
+                                <FormControl margin="normal" required fullWidth>
+                                    <InputLabel htmlFor="password">Mot de passe</InputLabel>
+                                    <Input
+                                        type="password"
+                                        name="password"
+                                        value={signInPassword}
+                                        onChange={this.handleSignInPassword}
+                                    />
+                                </FormControl>
+                                <br/><br/>
+                                <Button type="submit"
+                                        fullWidth
+                                        variant="contained"
+                                        color="primary">Sign in</Button>
+                            </form>
                         </Paper>
                     </div>
                 </div>
@@ -184,7 +184,9 @@ class SignIn extends Component {
             </div>
         );
     }
+
 }
+
 const MySingInStyled = withStyles(styles)(SignIn);
 
-export default  MySingInStyled ;
+export default MySingInStyled;
