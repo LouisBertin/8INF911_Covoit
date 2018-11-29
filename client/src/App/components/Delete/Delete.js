@@ -66,10 +66,10 @@ class Delete extends Component {
                 if (!json.success) {
                     this.setState({errorMsg: json.message})
                 } else {
-                    this.setState({errorMsg: json.message})
-                    this.setState(this.componentDidMount)
+                    this.props.notify('Votre trajet a été supprimé!');
+                    this.props.userMarker(this.props.token)
                 }
-            })
+            });
 
         this.setState({open: false})
     }

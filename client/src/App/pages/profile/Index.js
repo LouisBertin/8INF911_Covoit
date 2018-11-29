@@ -3,6 +3,7 @@ import {getFromStorage} from "../../utils/storage";
 import Map from "../../components/Map";
 import './Index.css';
 import Dialog from '@material-ui/core/Dialog';
+import Button from "@material-ui/core/Button/Button";
 
 class Index extends Component {
 
@@ -28,7 +29,7 @@ class Index extends Component {
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.state.latLngEnd !== prevState.latLngEnd) {
+        if (this.state.latLngEnd !== prevState.latLngEnd && Object.keys(this.state.latLngEnd).length > 0) {
             this.openDialog()
         }
     }
@@ -61,7 +62,12 @@ class Index extends Component {
                     <Dialog open={this.state.dialog_open} className="dialog-save" onBackdropClick={this.onBackdropClick}>
                         <p>Votre trajet est-il bien correct ?</p>
 
-                        <button onClick={this.onAddMarker} className="">Send</button>
+                        <Button variant="contained"
+                                color="secondary"
+                                onClick={this.onAddMarker}>Oui</Button>
+                        <Button variant="contained"
+                                color="primary"
+                                onClick={this.closeDialog}>Non</Button>
                     </Dialog>
                 </div>
             </div>
@@ -82,6 +88,12 @@ class Index extends Component {
         this.setState({dialog_open: true})
     };
     closeDialog = () => {
+        this.setState({
+            lng: '',
+            lat: '',
+            latLngEnd: {}
+        });
+
         this.setState({dialog_open: false})
     };
 
@@ -94,15 +106,7 @@ class Index extends Component {
     };
 
     onBackdropClick = () => {
-        let $this = this;
-
-        this.setState({
-            lng: '',
-            lat: '',
-            latLngEnd: {}
-        }, function () {
-            $this.closeDialog()
-        })
+        this.closeDialog()
     };
     // onClick
     onAddMarker = () => {
@@ -128,12 +132,6 @@ class Index extends Component {
                 if (!json.success) {
                     this.setState({errorMsg: json.message})
                 } else {
-                    this.setState({
-                        lng: '',
-                        lat: '',
-                        latLngEnd: {}
-                    });
-
                     this.closeDialog();
                     this.props.notify('Sauvegardé');
                     this.unmounted();
