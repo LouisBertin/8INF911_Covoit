@@ -1,7 +1,6 @@
 let Marker = require('../../models/Marker')
 let UserSession = require('../../models/UserSession')
 let User = require('../../models/User')
-let turf = require('@turf/turf');
 let Booking = require('../../models/Booking')
 let mapboxApi = require('../../helpers/mapboxApi')
 
@@ -89,10 +88,14 @@ module.exports = (app) => {
         Marker.deleteOne({ _id: id }, function (err) {
             if (err) return handleError(err);
 
-            return res.send({
-                success: true,
-                message: 'Marker deleted!'
-            })
+            Booking.deleteMany({
+                'markerId': { $in: id}
+            }, function(err, bookings) {
+                return res.send({
+                    success: true,
+                    message: 'Marker deleted!'
+                })
+            });
         });
     })
 

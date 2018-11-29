@@ -6,7 +6,9 @@ const MarkerSchema = new mongoose.Schema({
     userId: String,
     latLngEnd: Object,
     placeStart: Object,
-    placeEnd: Object
+    placeEnd: Object,
+}, {
+    timestamps: { createdAt: true}
 });
 
 module.exports = mongoose.model('Marker', MarkerSchema);
