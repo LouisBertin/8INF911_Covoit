@@ -4,6 +4,7 @@ import Map from "../../components/Map";
 import './Index.css';
 import Dialog from '@material-ui/core/Dialog';
 import Button from "@material-ui/core/Button/Button";
+import { DateTimePicker } from 'material-ui-pickers';
 
 class Index extends Component {
 
@@ -16,8 +17,10 @@ class Index extends Component {
             latLngEnd: {},
             errorMsg: '',
             userToken: '',
+            selectedDate: new Date,
             is_mounted: true,
-            dialog_open: false
+            dialog_open: false,
+            time_dialog: false
         }
     }
 
@@ -40,6 +43,7 @@ class Index extends Component {
         return (
             <div className="Profile">
                 <h3>Gérer vos marqueurs</h3>
+
                 <div className="MAP">
 
                     {
@@ -64,10 +68,26 @@ class Index extends Component {
 
                         <Button variant="contained"
                                 color="secondary"
-                                onClick={this.onAddMarker}>Oui</Button>
+                                onClick={this.openTimeDialog}>Oui</Button>
                         <Button variant="contained"
                                 color="primary"
                                 onClick={this.closeDialog}>Non</Button>
+                    </Dialog>
+
+                    <Dialog open={this.state.time_dialog} className="dialog-save" onBackdropClick={this.onBackdropClick}>
+                        <h3>Configuration de la course</h3>
+                        <DateTimePicker
+                            autoOk
+                            ampm={false}
+                            value={this.state.selectedDate}
+                            onChange={this.handleDateChange}
+                        />
+                        <Button variant="contained"
+                                color="secondary"
+                                onClick={this.onAddMarker}>Oui</Button>
+                        <Button variant="contained"
+                                color="primary"
+                                onClick={this.onBackdropClick}>Non</Button>
                     </Dialog>
                 </div>
             </div>
@@ -96,8 +116,15 @@ class Index extends Component {
 
         this.setState({dialog_open: false})
     };
-
-
+    handleDateChange = (date) => {
+        this.setState({ selectedDate: date });
+    };
+    openTimeDialog = () => {
+        this.setState({time_dialog: true})
+    }
+    closeTimeDialog = () => {
+        this.setState({time_dialog: false})
+    }
     mounted = () => {
         this.setState({is_mounted: true})
     };
@@ -107,13 +134,15 @@ class Index extends Component {
 
     onBackdropClick = () => {
         this.closeDialog()
+        this.closeTimeDialog()
     };
     // onClick
     onAddMarker = () => {
         const {
             lat,
             lng,
-            userToken
+            userToken,
+            selectedDate
         } = this.state;
 
         fetch('/api/markers/add', {
@@ -125,7 +154,8 @@ class Index extends Component {
                 lat: lat,
                 lng: lng,
                 token: userToken,
-                latLngEnd: this.state.latLngEnd
+                latLngEnd: this.state.latLngEnd,
+                selectedDate: selectedDate
             })
         }).then(res => res.json())
             .then(json => {
@@ -133,6 +163,7 @@ class Index extends Component {
                     this.setState({errorMsg: json.message})
                 } else {
                     this.closeDialog();
+                    this.closeTimeDialog();
                     this.props.notify('Sauvegardé');
                     this.unmounted();
                     this.mounted();

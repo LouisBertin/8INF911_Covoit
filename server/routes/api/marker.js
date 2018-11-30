@@ -42,7 +42,8 @@ module.exports = (app) => {
             lat,
             lng,
             token,
-            latLngEnd
+            latLngEnd,
+            selectedDate
         } = body;
 
         // TODO: express validator ?
@@ -65,7 +66,8 @@ module.exports = (app) => {
                     userId: user._id,
                     latLngEnd: latLngEnd,
                     placeStart,
-                    placeEnd
+                    placeEnd,
+                    departureDate: selectedDate
                 });
                 marker.save(function (err) {
                     if (err) return handleError(err);
