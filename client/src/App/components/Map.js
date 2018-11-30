@@ -261,6 +261,10 @@ class Map extends Component {
                 }
                 for (let marker of json) {
                     marker = {
+                            "seats" :{
+                                "totalSeats": marker.totalSeats,
+                                "currentSeats": marker.currentSeats
+                            },
                             "properties": {
                                 "userId": marker.userId,
                                 "markerId": marker._id

@@ -36,22 +36,25 @@ class Booking extends Component {
 
     render() {
         const {firstName, lastName} = this.props.marker.user;
+        const {currentSeats, totalSeats} = this.props.marker.seats;
         const {loggedIn} = this.props;
         const is_current_user = (this.state.current_user._id === this.props.marker.user.id) ? true : null;
         const is_booked = this.isBooked();
 
         return (
             <div>
-                <p>{firstName} {lastName}</p>
-
+                <p>Driver : {firstName} {lastName}</p>
+                <p>Places : {(currentSeats === undefined) ? 0 : currentSeats} / {totalSeats}</p>
                 {
                     (loggedIn) ? (
                         (!is_current_user) ? (
-                            (!is_booked) ? (
-                                <Button color="primary" variant="contained" onClick={this.handleButtonClick}>
-                                    Réserver
-                                </Button>
-                            ) : <p style={{color: "blue"}}><b>réservé</b></p>
+                            (currentSeats !== totalSeats) ? (
+                                (!is_booked) ? (
+                                    <Button color="primary" variant="contained" onClick={this.handleButtonClick}>
+                                        Réserver
+                                    </Button>
+                                ) : <p style={{color: "blue"}}><b>réservé</b></p>
+                            ) : <p style={{color: "red"}}><b>CoVoit complet!</b></p>
                         ) : <p style={{color: "green"}}><b>c'est ton marqueur boy!</b></p>
                     ) : <p style={{color: "red"}}><b>Veuillez vous connecter pour réserver</b></p>
                 }

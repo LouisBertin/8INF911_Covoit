@@ -7,7 +7,12 @@ const MarkerSchema = new mongoose.Schema({
     latLngEnd: Object,
     placeStart: Object,
     placeEnd: Object,
-    departureDate: Date
+    departureDate: Date,
+    totalSeats: Number,
+    currentSeats: {
+        Types: Number,
+        default: 0
+    }
 }, {
     timestamps: { createdAt: true}
 });

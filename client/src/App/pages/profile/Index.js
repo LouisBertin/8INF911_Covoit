@@ -4,6 +4,7 @@ import Map from "../../components/Map";
 import './Index.css';
 import Dialog from '@material-ui/core/Dialog';
 import Button from "@material-ui/core/Button/Button";
+import TextField from '@material-ui/core/TextField';
 import { DateTimePicker } from 'material-ui-pickers';
 
 class Index extends Component {
@@ -18,6 +19,7 @@ class Index extends Component {
             errorMsg: '',
             userToken: '',
             selectedDate: new Date,
+            seats: '',
             is_mounted: true,
             dialog_open: false,
             time_dialog: false
@@ -76,6 +78,14 @@ class Index extends Component {
 
                     <Dialog open={this.state.time_dialog} className="dialog-save" onBackdropClick={this.onBackdropClick}>
                         <h3>Configuration de la course</h3>
+                        <TextField
+                            id="standard-number"
+                            label="Places"
+                            value={this.state.seats}
+                            onChange={this.handleSeatsChange}
+                            type="number"
+                            margin="normal"
+                        />
                         <DateTimePicker
                             autoOk
                             ampm={false}
@@ -131,6 +141,9 @@ class Index extends Component {
     unmounted = () => {
         this.setState({is_mounted: false})
     };
+    handleSeatsChange = (event) => {
+        this.setState({seats: event.target.value})
+    }
 
     onBackdropClick = () => {
         this.closeDialog()
@@ -142,7 +155,8 @@ class Index extends Component {
             lat,
             lng,
             userToken,
-            selectedDate
+            selectedDate,
+            seats
         } = this.state;
 
         fetch('/api/markers/add', {
@@ -155,7 +169,8 @@ class Index extends Component {
                 lng: lng,
                 token: userToken,
                 latLngEnd: this.state.latLngEnd,
-                selectedDate: selectedDate
+                selectedDate: selectedDate,
+                seats: seats
             })
         }).then(res => res.json())
             .then(json => {

@@ -20,6 +20,12 @@ module.exports = (app) => {
         booking.save(function (err) {
             if (err) return handleError(err);
 
+            Marker.findOneAndUpdate({ _id: marker_id }, { $inc: { currentSeats: 1 } },function(err, response) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+
             res.send({
                 success: true,
                 message: 'Booking added!'
