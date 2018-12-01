@@ -1,0 +1,14 @@
+.footer-component {
+    width: 100%;
+    background: #f5f5f5;
+    padding: 2em 0;
+    margin-top: 2em;
+}
+
+.footer-component > div {
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

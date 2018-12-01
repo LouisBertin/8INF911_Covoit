@@ -14,7 +14,7 @@ class Contact extends Component {
             <div className="Contact">
                 <form className="lll">
                     <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="firstname">First name</InputLabel>
+                        <InputLabel htmlFor="firstname">Prenom</InputLabel>
                         <Input
                             type="text"
                             name="firstname"
@@ -23,7 +23,7 @@ class Contact extends Component {
                         />
                     </FormControl>
                     <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="lastname">Last name</InputLabel>
+                        <InputLabel htmlFor="lastname">Nom</InputLabel>
                         <Input
                             type="text"
                             namme="lastName"
@@ -35,8 +35,8 @@ class Contact extends Component {
                         <FormLabel component="legend">Genre</FormLabel>
                         <RadioGroup aria-label={"Gender"} row>
                             <FormControlLabel value="female" control={<Radio color="primary" />} label="Female" />
-                            <FormControlLabel value="male" control={<Radio />} label="Male" />
-                            <FormControlLabel value="other" control={<Radio />} label="Other" />
+                            <FormControlLabel value="male" control={<Radio color="primary"/>} label="Male"/>
+                            <FormControlLabel value="other" control={<Radio color="primary"/>} label="Other"/>
 
                         </RadioGroup>
 
@@ -45,7 +45,7 @@ class Contact extends Component {
                     </FormControl>
 
                     <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="firstname">Email Address</InputLabel>
+                        <InputLabel htmlFor="firstname">Adresse e-mail</InputLabel>
                         <Input
                             type="email"
                             name="email"

@@ -9,6 +9,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
+import './SignIn.css'
 
 const styles = theme => ({
     layout: {
@@ -138,7 +139,7 @@ class SignIn extends Component {
         if (!token) {
             return (
                 <div>
-
+                    <h2 className="TitleSignIn">Connexion</h2>
                     <div>
                         {
                             (signInError) ? (
@@ -146,9 +147,8 @@ class SignIn extends Component {
                             ) : null
                         }
                         <Paper className="lll">
-                            <Typography component="h1" variant="h5" style={{margin: 'auto'}}>Sign in</Typography>
                         <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="email">Email Address</InputLabel>
+                            <InputLabel htmlFor="email">Adresse e-mail</InputLabel>
                             <Input
                                 type="email"
                                 name="email"
@@ -157,7 +157,7 @@ class SignIn extends Component {
                             />
                         </FormControl>
                         <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="password">Password</InputLabel>
+                            <InputLabel htmlFor="password">Mot de passe</InputLabel>
                             <Input
                                 type="password"
                                 name="password"

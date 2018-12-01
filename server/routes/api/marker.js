@@ -3,6 +3,7 @@ let UserSession = require('../../models/UserSession')
 let User = require('../../models/User')
 let turf = require('@turf/turf');
 let Booking = require('../../models/Booking')
+let mapboxApi = require('../../helpers/mapboxApi')
 
 module.exports = (app) => {
 
@@ -41,7 +42,8 @@ module.exports = (app) => {
         const {
             lat,
             lng,
-            token
+            token,
+            latLngEnd
         } = body;
 
         // TODO: express validator ?
@@ -54,21 +56,28 @@ module.exports = (app) => {
 
         // find user and insert marker in db
         UserSession.findOne({ _id: token }, function (err, userSession) {
-            User.findOne({ _id: userSession.userId }, function (err, user) {
+            User.findOne({_id: userSession.userId}, async function (err, user) {
+                const placeStart = await mapboxApi.placeData(lng, lat)
+                const placeEnd = await mapboxApi.placeData(latLngEnd.lng, latLngEnd.lat)
+
                 let marker = new Marker({
                     lng: lng,
                     lat: lat,
-                    userId: user._id
+                    userId: user._id,
+                    latLngEnd: latLngEnd,
+                    placeStart,
+                    placeEnd
                 });
-                marker.save();
+                marker.save(function (err) {
+                    if (err) return handleError(err);
+
+                    return res.send({
+                        success: true,
+                        message: 'Congratulations'
+                    })
+                });
             });
         });
-
-        return res.send({
-            success: true,
-            message: 'Congratulations'
-        })
-
     });
 
     app.post('/api/markers/delete', (req, res, next) => {

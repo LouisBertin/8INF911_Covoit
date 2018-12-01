@@ -1,12 +1,33 @@
 .margin-button {
     margin: 0 1em!important;
+    background-color: black;
 }
 
-.image {
-    max-width: 10em;
+.overlay {
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
 }
 
-.Header {
-
-    Background-color: #222831
+.LogoSite {
+    max-width: 100px;
 }
+
+.Message1, .Message2 {
+    font-family: 'Roboto', sans-serif;
+}
+
+.MuiToolbar-root-37 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.MuiToolbar-root-37 > div {
+    display: flex;
+    align-items: center;
+}
+

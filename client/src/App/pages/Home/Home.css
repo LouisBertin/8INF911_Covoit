@@ -1,33 +1,25 @@
-.Home {
-
-}
-
-.blonde {
+.Route {
     max-width: 100%;
 }
 
-.conteneur {
+.ImgAccueil {
     position: relative;
 }
 
-.Message {
+.Message1 {
     position: absolute;
     top: 10%;
-    left: 62%;
+    left: 60%;
     color: white;
-
-    font-family: Wooden;
+    font-family: "Open Sans";
 }
 
-h1 {
-    font-size: 4em;
+.Message2 {
+    text-align: center;
+    color: #1e5799;
+    font-family: "Open Sans"
 }
 
-h2 {
-    font-size: 2.5em;
-}
-
-@font-face {
-    font-family: Wooden;
-    src: url('../../font/WoodenNickelNF.otf')
+.MapHome {
+    margin: 3em;
 }

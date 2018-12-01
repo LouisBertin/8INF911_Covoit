@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {getFromStorage} from "../../utils/storage";
 import Map from "../../components/Map";
+import './Index.css';
+import Dialog from '@material-ui/core/Dialog';
 
 class Index extends Component {
 
@@ -10,9 +12,11 @@ class Index extends Component {
         this.state = {
             lng: '',
             lat: '',
+            latLngEnd: {},
             errorMsg: '',
             userToken: '',
-            is_mounted: true
+            is_mounted: true,
+            dialog_open: false
         }
     }
 
@@ -23,31 +27,44 @@ class Index extends Component {
         }
     };
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.latLngEnd !== prevState.latLngEnd) {
+            this.openDialog()
+        }
+    }
+
     render () {
         const {userToken, errorMsg, is_mounted} = this.state;
 
         return (
-            <div>
-                <h3>Profile page </h3>
+            <div className="Profile">
+                <h3>Gérer vos marqueurs</h3>
+                <div className="MAP">
 
-                {
-                    (errorMsg) ? (
-                        <p>{errorMsg}</p>
-                    ) : null
-                }
+                    {
+                        (errorMsg) ? (
+                            <p>{errorMsg}</p>
+                        ) : null
+                    }
 
-                {
-                    (is_mounted) ? (<Map geocoderBar={true}
-                                         userMarker={[true, userToken]}
-                                         updateLng={this.updateLng}
-                                         updateLat={this.updateLat}
-                                         userlat={this.state.lat}
-                                         userlng={this.state.lng}
-                    />) : null
-                }
+                    {
+                        (is_mounted) ? (<Map geocoderBar={true}
+                                             userMarker={[true, userToken]}
+                                             updateLng={this.updateLng}
+                                             updateLat={this.updateLat}
+                                             updateLatLngEnd={this.updateLatLngEnd}
+                                             firstLat={this.state.lat}
+                                             notify={this.props.notify}
+                        />) : null
+                    }
 
+                    <Dialog open={this.state.dialog_open} className="dialog-save"
+                            onBackdropClick={this.onBackdropClick}>
+                        <p>Votre trajet est-il bien correct ?</p>
 
-                <button onClick={this.onAddMarker}>Send</button>
+                        <button onClick={this.onAddMarker} className="">Send</button>
+                    </Dialog>
+                </div>
             </div>
         )
     }
@@ -58,8 +75,17 @@ class Index extends Component {
     };
     updateLat = (value) => {
         this.setState({lat: value})
-
     };
+    updateLatLngEnd = (value) => {
+        this.setState({latLngEnd: value})
+    };
+    openDialog = () => {
+        this.setState({dialog_open: true})
+    };
+    closeDialog = () => {
+        this.setState({dialog_open: false})
+    };
+
 
     mounted = () => {
         this.setState({is_mounted: true})
@@ -68,6 +94,17 @@ class Index extends Component {
         this.setState({is_mounted: false})
     };
 
+    onBackdropClick = () => {
+        let $this = this;
+
+        this.setState({
+            lng: '',
+            lat: '',
+            latLngEnd: {}
+        }, function () {
+            $this.closeDialog()
+        })
+    };
     // onClick
     onAddMarker = () => {
         const {
@@ -84,14 +121,22 @@ class Index extends Component {
             body: JSON.stringify({
                 lat: lat,
                 lng: lng,
-                token: userToken
+                token: userToken,
+                latLngEnd: this.state.latLngEnd
             })
         }).then(res => res.json())
             .then(json => {
                 if (!json.success) {
                     this.setState({errorMsg: json.message})
                 } else {
-                    this.setState({errorMsg: 'Congratulations'});
+                    this.setState({
+                        lng: '',
+                        lat: '',
+                        latLngEnd: {}
+                    });
+
+                    this.closeDialog();
+                    this.props.notify('Sauvegardé');
                     this.unmounted();
                     this.mounted();
                 }

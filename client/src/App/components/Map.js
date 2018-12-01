@@ -19,15 +19,13 @@ let marker_circle;
 let circle_radius = config.CIRCLE_SIZE;
 let all_markers = [];
 
-
 class Map extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            is_mounted_booking: true,
-
+            is_mounted_booking: true
         }
     }
 
@@ -49,7 +47,6 @@ class Map extends Component {
             this.mountBooking();
             this.getMarkersInBounds(marker_circle.getCenter(), circle_radius);
         }
-
 
         if (marker_circle && this.props.circle !== undefined)
             this.updateCircleRadius(this.props.circle[1])
@@ -113,6 +110,7 @@ class Map extends Component {
             if (user_location) {
                 const user_lat = user_location.latitude;
                 const user_lng = user_location.longitude;
+
                 if ($this.props.circle) {
                     const is_user_circle = $this.props.circle[0];
 
@@ -138,7 +136,6 @@ class Map extends Component {
         // geocoder bar element
         map.addControl(geocoder);
         map.on('load', function() {
-
             map.addSource('single-point', {
                 "type": "geojson",
                 "data": {
@@ -162,12 +159,18 @@ class Map extends Component {
                 const lng = event.result.center[0];
                 const lat = event.result.center[1];
 
+                map.getSource('single-point').setData(event.result.geometry);
+
+                if ($this.props.firstLat) {
+                    $this.props.updateLatLngEnd({lat, lng});
+
+                    return false
+                }
 
                 $this.props.updateLat(lat);
                 $this.props.updateLng(lng);
-
-            })
-
+                $this.props.notify('Sélectionnez une nouvelle place!')
+            });
         });
 
         // geolocate user element
@@ -184,28 +187,26 @@ class Map extends Component {
             if (user_location) {
                 const user_lat = user_location.latitude;
                 const user_lng = user_location.longitude;
+
                 $this.props.updateLat(user_lat);
                 $this.props.updateLng(user_lng);
 
+                $this.props.notify('Sélectionnez une nouvelle place!');
             }
         });
-
     }
 
     // only display user markers
     userMarker = (token) => {
-        const $this = this;
         const url = '/api/markers/token?token=' + token;
         fetch(url)
             .then(res => res.json())
             .then(json => {
                 for (let marker of json) {
                     const placeholder = document.createElement('div');
-                    ReactDOM.render(<Delete id={marker._id} userMarker={this.userMarker} loggedIn={$this.props.loggedIn}
-                                            lat={$this.state.lat} lng={$this.state.lng}
-                    />, placeholder);
+                    ReactDOM.render(<Delete id={marker._id}/>, placeholder);
                     const popup = new mapBox.Popup({offset: 25})
-                        .setDOMContent(placeholder)
+                        .setDOMContent(placeholder);
                     new mapBox.Marker()
                         .setLngLat([marker.lng, marker.lat])
                         .addTo(map)
@@ -213,12 +214,10 @@ class Map extends Component {
                     ;
 
                 }
-
             })
             .catch(function(err) {
                 console.log('Fetch Error : ', err);
             });
-
     }
 
     updateCircleRadius = (radius) => {

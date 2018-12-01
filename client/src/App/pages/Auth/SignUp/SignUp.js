@@ -6,6 +6,7 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import './SignUp.css';
 
 class SignUp extends Component {
 
@@ -98,24 +99,23 @@ class SignUp extends Component {
 
         if (isLoading) {
             return (
-                <div><p>Loading...</p></div>
+                <div><p>Chargement...</p></div>
             )
         }
 
         if (!token) {
             return (
-                <div>
+                <div className="TitleSignUp">
+                    <h2>Inscription</h2>
                     <div>
-
                         {
                             (signUpError) ? (
                                 <p>{signUpError}</p>
                             ) : null
                         }
                         <Paper className="lll">
-                        <Typography component="h1" variant="h5" Style="margin:auto;">Sign Up</Typography>
                         <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="firstname">First name</InputLabel>
+                            <InputLabel htmlFor="firstname">Prenom</InputLabel>
                             <Input
                                 type="text"
                                 name="firstname"
@@ -124,16 +124,16 @@ class SignUp extends Component {
                             />
                         </FormControl>
                         <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="lastname">Last name</InputLabel>
+                            <InputLabel htmlFor="lastname">Nom</InputLabel>
                             <Input
                                 type="text"
-                                namme="lastName"
+                                name="lastName"
                                 value={signUpLastName}
                                 onChange={this.handleSignUpLastName}
                             />
                         </FormControl>
                         <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="firstname">Email Address</InputLabel>
+                            <InputLabel htmlFor="firstname">Adresse e-mail</InputLabel>
                             <Input
                                 type="email"
                                 name="email"
@@ -142,7 +142,7 @@ class SignUp extends Component {
                             />
                         </FormControl>
                         <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="firstname">Password</InputLabel>
+                            <InputLabel htmlFor="firstname">Mot de passe</InputLabel>
                         <Input
                             type="password"
                             name="password"
@@ -150,7 +150,7 @@ class SignUp extends Component {
                             onChange={this.handleSignUpPassword}
                         />
                         </FormControl>
-                        <Button onClick={this.onSignUp} color="primary" variant={"contained"}>Sign up</Button>
+                            <Button onClick={this.onSignUp} color="primary" variant={"contained"}>S'inscrire</Button>
                         </Paper>
                     </div>
                 </div>
