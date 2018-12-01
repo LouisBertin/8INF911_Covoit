@@ -112,7 +112,7 @@ module.exports = (app) => {
         } = body
 
         // retrieve markers
-        Marker.find({}, function(err, markers){
+        Marker.find({departureDate: { $gte: new Date()}}, function(err, markers){
             if(err) {
                 console.log(err);
                 return
