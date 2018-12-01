@@ -93,6 +93,30 @@ class Map extends Component {
     userGeolocate = () => {
         const $this = this;
 
+        // geocoder bar element
+        let geocoder = new MapboxGeocoder({
+            accessToken: mapBox.accessToken
+        });
+        map.addControl(geocoder);
+        geocoder.on('result', function(event) {
+            const lng = event.result.center[0];
+            const lat = event.result.center[1];
+
+            if ($this.props.circle) {
+                const is_user_circle = $this.props.circle[0];
+
+                if (is_user_circle) {
+                    if (marker_circle) {
+                        marker_circle.remove()
+                    }
+                    marker_circle = new MapboxCircle({lat: lat, lng: lng}, circle_radius, {
+                        fillColor: config.CIRCLE_COLOR
+                    }).addTo(map);
+                    $this.getMarkersInBounds(marker_circle.getCenter(), circle_radius)
+                }
+            }
+        });
+
         // GeolocateControl object
         let geolocate = new mapBox.GeolocateControl({
             positionOptions: {
@@ -101,7 +125,6 @@ class Map extends Component {
             trackUserLocation: false
         });
         map.addControl(geolocate);
-
         geolocate.on('geolocate', function(data) {
             let user_location = data.coords
             if (user_location) {
@@ -112,6 +135,9 @@ class Map extends Component {
                     const is_user_circle = $this.props.circle[0];
 
                     if (is_user_circle) {
+                        if (marker_circle) {
+                            marker_circle.remove()
+                        }
                         marker_circle = new MapboxCircle({lat: user_lat, lng: user_lng}, circle_radius, {
                             fillColor: config.CIRCLE_COLOR
                         }).addTo(map);
@@ -120,7 +146,6 @@ class Map extends Component {
                 }
             }
         });
-
     }
 
     // location search bar
