@@ -62,20 +62,48 @@ module.exports = (app) => {
                 new_booking.marker = marker;
                 new_booking.driver = driver;
 
-                if(!isBefore(new Date(marker.departureDate), new Date())){
-                    return new_booking
-                }
+                return new_booking
             });
 
             // return all
             Promise.all(all_bookings).then(results => {
-                const data = results.filter(function (booking) {
-                    return booking !== undefined
+                // filter bookings by departureDate
+                const currentBooking = results.filter(function (booking) {
+                    if (!isBefore(new Date(booking.marker.departureDate), new Date()) && booking !== undefined)
+                    return booking
+                });
+                const pastBooking = results.filter(function (booking) {
+                    if(isBefore(new Date(booking.marker.departureDate), new Date())){
+                        return booking
+                    }
                 });
 
-                return res.json(data)
+                return res.json({
+                    "current_bookings": currentBooking,
+                    "past_bookings": pastBooking
+                })
             });
         })
     })
 
-}
+    app.post('/api/booking/cancel', (req, res) => {
+        const {
+            id
+        } = req.body
+
+        Booking.findByIdAndRemove({ _id: id }, function (err, booking) {
+            if (err) return handleError(err);
+
+            Marker.findOneAndUpdate({ _id: booking.markerId }, { $inc: { currentSeats: -1 } },function(err, response) {
+                if (err) {
+                    console.log(err);
+                }
+
+                return res.send({
+                    success: true
+                })
+            });
+        });
+    })
+
+    }
