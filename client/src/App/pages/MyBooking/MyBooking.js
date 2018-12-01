@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Format from 'date-fns/format';
+import differenceInHours from 'date-fns/difference_in_hours'
 const config = require('../../utils/storage')
 
 class MyBooking extends Component {
@@ -49,12 +50,17 @@ class MyBooking extends Component {
                 <ul>
                     {
                         (bookings) ? bookings.current_bookings.map((booking) =>
-                            <li key={booking._id}>
-                                <span>Covoit avec {booking.driver.firstName} {booking.driver.lastName} !</span><br/>
-                                <span>Départ : {booking.marker.placeStart.place_name}</span><br/>
-                                <span>Arrivée : {booking.marker.placeEnd.place_name}</span><br/>
-                                <span>Date : {Format(booking.marker.departureDate, 'yyyy-MM-dd HH:mm')}</span>
-                            </li>
+                            <div key={booking._id}>
+                                <li>
+                                    <span>Covoit avec {booking.driver.firstName} {booking.driver.lastName} !</span><br/>
+                                    <span>Départ : {booking.marker.placeStart.place_name}</span><br/>
+                                    <span>Arrivée : {booking.marker.placeEnd.place_name}</span><br/>
+                                    <span>Date : {Format(booking.marker.departureDate, 'yyyy-MM-dd HH:mm')}</span>
+                                </li>
+                                {
+                                    (differenceInHours(new Date(booking.marker.departureDate)), new Date() >= 24) ? <button onClick={ () => {this.cancelBooking(booking._id)} }>Annuler</button> : null
+                                }
+                            </div>
                         ) : null
                     }
                 </ul>
@@ -75,6 +81,25 @@ class MyBooking extends Component {
 
             </div>
         )
+    }
+
+    cancelBooking = (id) => {
+        const $this = this;
+
+        fetch('/api/booking/cancel', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: id
+            })
+        }).then(res => res.json())
+            .then(function (json) {
+                if (json.success) {
+                    $this.componentWillMount()
+                }
+            })
     }
 
 }

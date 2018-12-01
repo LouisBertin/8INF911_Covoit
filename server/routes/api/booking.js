@@ -86,4 +86,24 @@ module.exports = (app) => {
         })
     })
 
-}
+    app.post('/api/booking/cancel', (req, res) => {
+        const {
+            id
+        } = req.body
+
+        Booking.findByIdAndRemove({ _id: id }, function (err, booking) {
+            if (err) return handleError(err);
+
+            Marker.findOneAndUpdate({ _id: booking.markerId }, { $inc: { currentSeats: -1 } },function(err, response) {
+                if (err) {
+                    console.log(err);
+                }
+
+                return res.send({
+                    success: true
+                })
+            });
+        });
+    })
+
+    }
