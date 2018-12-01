@@ -44,11 +44,11 @@ class MyBooking extends Component {
 
         return (
             <div>
-                <h3>Mes réservations</h3>
 
+                <h3>Mes réservations en cours</h3>
                 <ul>
                     {
-                        (bookings) ? bookings.map((booking) =>
+                        (bookings) ? bookings.current_bookings.map((booking) =>
                             <li key={booking._id}>
                                 <span>Covoit avec {booking.driver.firstName} {booking.driver.lastName} !</span><br/>
                                 <span>Départ : {booking.marker.placeStart.place_name}</span><br/>
@@ -58,6 +58,21 @@ class MyBooking extends Component {
                         ) : null
                     }
                 </ul>
+
+                <h3>Mes réservations passées</h3>
+                <ul>
+                    {
+                        (bookings) ? bookings.past_bookings.map((booking) =>
+                            <li key={booking._id}>
+                                <span>Covoit avec {booking.driver.firstName} {booking.driver.lastName} !</span><br/>
+                                <span>Départ : {booking.marker.placeStart.place_name}</span><br/>
+                                <span>Arrivée : {booking.marker.placeEnd.place_name}</span><br/>
+                                <span>Date : {Format(booking.marker.departureDate, 'yyyy-MM-dd HH:mm')}</span>
+                            </li>
+                        ) : null
+                    }
+                </ul>
+
             </div>
         )
     }
