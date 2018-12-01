@@ -14,10 +14,7 @@ const mapStyle = {
     width: '100%',
     margin: '3em 0'
 };
-let map;
-let marker_circle;
-let circle_radius = config.CIRCLE_SIZE;
-let all_markers = [];
+let map; let marker_circle; let circle_radius = config.CIRCLE_SIZE; let all_markers = []; let user_markers = [];
 
 class Map extends Component {
 
@@ -182,7 +179,7 @@ class Map extends Component {
         });
         map.addControl(geolocate);
 
-        geolocate.on('geolocate', function (data) {
+        geolocate.on('geolocate', function(data) {
             let user_location = data.coords
             if (user_location) {
                 const user_lat = user_location.latitude;
@@ -202,18 +199,28 @@ class Map extends Component {
         fetch(url)
             .then(res => res.json())
             .then(json => {
+                if (user_markers.length > 0) {
+                    user_markers.map((user_marker) => {
+                        return user_marker.remove()
+                    })
+                }
+
                 for (let marker of json) {
                     const placeholder = document.createElement('div');
-                    ReactDOM.render(<Delete id={marker._id}/>, placeholder);
+                    ReactDOM.render(<Delete id={marker._id}
+                                            notify={this.props.notify}
+                                            userMarker={this.userMarker}
+                                            token={token} />, placeholder);
                     const popup = new mapBox.Popup({offset: 25})
                         .setDOMContent(placeholder);
-                    new mapBox.Marker()
+                    const marker_user = new mapBox.Marker()
                         .setLngLat([marker.lng, marker.lat])
                         .addTo(map)
                         .setPopup(popup)
                     ;
-
+                    user_markers.push(marker_user)
                 }
+
             })
             .catch(function(err) {
                 console.log('Fetch Error : ', err);
@@ -254,6 +261,10 @@ class Map extends Component {
                 }
                 for (let marker of json) {
                     marker = {
+                            "seats" :{
+                                "totalSeats": marker.totalSeats,
+                                "currentSeats": marker.currentSeats
+                            },
                             "properties": {
                                 "userId": marker.userId,
                                 "markerId": marker._id
@@ -264,7 +275,7 @@ class Map extends Component {
                                     marker.lat
                                 ]
                             },
-                        "bookings": marker.booking,
+                            "bookings": marker.booking,
                             "user": {
                                 "id": marker.user[0]._id,
                                 "firstName": marker.user[0].firstName,

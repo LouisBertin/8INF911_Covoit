@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-
+import React, { Component } from 'react';
+import Format from 'date-fns/format';
 const config = require('../../utils/storage')
 
 class MyBooking extends Component {
@@ -40,7 +40,7 @@ class MyBooking extends Component {
     }
 
     render() {
-        const {bookings} = this.state;
+        const { bookings } = this.state;
 
         return (
             <div>
@@ -52,7 +52,8 @@ class MyBooking extends Component {
                             <li key={booking._id}>
                                 <span>Covoit avec {booking.driver.firstName} {booking.driver.lastName} !</span><br/>
                                 <span>Départ : {booking.marker.placeStart.place_name}</span><br/>
-                                <span>Arrivée : {booking.marker.placeEnd.place_name}</span>
+                                <span>Arrivée : {booking.marker.placeEnd.place_name}</span><br/>
+                                <span>Date : {Format(booking.marker.departureDate, 'yyyy-MM-dd HH:mm')}</span>
                             </li>
                         ) : null
                     }

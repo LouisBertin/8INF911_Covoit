@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import {getFromStorage} from "../../utils/storage";
 
 const overrideStyles = {
     padding: "5em",
@@ -14,32 +13,13 @@ class Delete extends Component {
         super(props);
 
         this.state = {
-            open: false,
-            token: null,
-            lat: "",
-            lng: ""
-        }
-    }
-
-
-    componentDidMount() {
-        console.log(this.state.lat + "++++++")
-        if (this.props.loggedIn) {
-
-            const obj = getFromStorage('the_main_app');
-            if (obj && obj.token) {
-                this.setState({token: obj.token})
-
-
-            }
+            open: false
         }
     }
 
     render() {
         return (
             <div>
-
-                <Button variant="contained" color="Primary" onClick={this.handleButtonClick}>Trajet</Button>
                 <Button variant="contained" color="secondary" onClick={this.handleButtonClick}>Supprimer</Button>
                 <Dialog
                     open={this.state.open}
@@ -64,13 +44,6 @@ class Delete extends Component {
         this.openModal()
     };
 
-    updateLngDel = (value) => {
-        this.setState({lng: value})
-    };
-    updateLatDel = (value) => {
-        this.setState({lat: value})
-
-    };
     openModal = () => {
         this.setState({open: true})
     };
@@ -93,37 +66,13 @@ class Delete extends Component {
                 if (!json.success) {
                     this.setState({errorMsg: json.message})
                 } else {
-                    this.setState({errorMsg: json.message})
-                    this.setState(this.componentDidMount)
-
+                    this.props.notify('Votre trajet a été supprimé!');
+                    this.props.userMarker(this.props.token)
                 }
-            })
+            });
 
-
+        this.setState({open: false})
     }
-    validateReservation = () => {
-        const $this = this;
-
-        fetch('/api/booking/new', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                user_id: this.state.token,
-                driver_id: this.props.driver.id,
-                marker_id: this.props.markerId,
-
-
-            })
-        }).then(res => res.json())
-            .then(function (json) {
-                if (json.success) {
-                    $this.closeModal();
-                    $this.props.notify('Covoit réservé!')
-                }
-            })
-    };
 
 
 }

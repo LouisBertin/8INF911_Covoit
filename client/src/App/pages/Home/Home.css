@@ -1,10 +1,11 @@
-.Route {
+.Route{
     max-width: 100%;
 }
 
-.ImgAccueil {
+.ImgAccueil{
     position: relative;
 }
+
 
 .Message1 {
     position: absolute;
@@ -20,6 +21,6 @@
     font-family: "Open Sans"
 }
 
-.MapHome {
+.MapHome{
     margin: 3em;
 }

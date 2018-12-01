@@ -1,6 +1,7 @@
 let Booking = require('../../models/Booking')
 let Marker = require('../../models/Marker')
 let User = require('../../models/User')
+let isBefore = require('date-fns/is_before')
 
 module.exports = (app) => {
 
@@ -20,6 +21,12 @@ module.exports = (app) => {
         booking.save(function (err) {
             if (err) return handleError(err);
 
+            Marker.findOneAndUpdate({ _id: marker_id }, { $inc: { currentSeats: 1 } },function(err, response) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+
             res.send({
                 success: true,
                 message: 'Booking added!'
@@ -34,7 +41,7 @@ module.exports = (app) => {
 
         Booking.find({
             'userId': userId
-        }, function (err, bookings) {
+        }, function(err, bookings){
 
             // add marker data for each booking
             let all_bookings = bookings.map(async function (booking) {
@@ -55,12 +62,18 @@ module.exports = (app) => {
                 new_booking.marker = marker;
                 new_booking.driver = driver;
 
-                return new_booking
+                if(!isBefore(new Date(marker.departureDate), new Date())){
+                    return new_booking
+                }
             });
 
             // return all
             Promise.all(all_bookings).then(results => {
-                return res.json(results)
+                const data = results.filter(function (booking) {
+                    return booking !== undefined
+                });
+
+                return res.json(data)
             });
         })
     })

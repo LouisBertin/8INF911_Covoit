@@ -6,7 +6,15 @@ const MarkerSchema = new mongoose.Schema({
     userId: String,
     latLngEnd: Object,
     placeStart: Object,
-    placeEnd: Object
+    placeEnd: Object,
+    departureDate: Date,
+    totalSeats: Number,
+    currentSeats: {
+        Types: Number,
+        default: 0
+    }
+}, {
+    timestamps: { createdAt: true}
 });
 
 module.exports = mongoose.model('Marker', MarkerSchema);

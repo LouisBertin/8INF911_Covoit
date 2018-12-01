@@ -150,7 +150,7 @@ class SignUp extends Component {
                             onChange={this.handleSignUpPassword}
                         />
                         </FormControl>
-                            <Button onClick={this.onSignUp} color="primary" variant={"contained"}>S'inscrire</Button>
+                        <Button onClick={this.onSignUp} color="primary" variant={"contained"}>S'inscrire</Button>
                         </Paper>
                     </div>
                 </div>

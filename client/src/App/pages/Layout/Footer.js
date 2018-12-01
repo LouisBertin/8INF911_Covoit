@@ -9,9 +9,9 @@ class Footer extends Component {
         return (
             <footer className="footer-component">
                 <div>
-                    <img src={Logo} className="LogoSite" alt="Logo"/>
-                    <span className="Copyright">© Copyright 2018 - Covoit</span>
-                    <span className="CGU">CGU</span>
+                        <img src={Logo} className="LogoSite" alt = "Logo"/>
+                        <span className="Copyright">© Copyright 2018 - Covoit</span>
+                        <span className="CGU">CGU</span>
                 </div>
             </footer>
         )

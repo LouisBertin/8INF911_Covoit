@@ -14,12 +14,12 @@ class Header extends Component {
             <AppBar position="static" color="default" className="Header">
                 <Toolbar>
                     <div>
-                        <img src={Logo} className="LogoSite" alt="Logo"/>
+                        <img src={Logo} className="LogoSite" alt = "Logo"/>
                         <Link to="/"><Button>Home</Button></Link>
                         {/*
                     <Link to="/contact"><Button>Contact</Button></Link>
 */}
-                        <a href="#MapCenter"><Button>Faire mon épicerie</Button></a>
+                    <a href="#MapCenter"><Button>Faire mon épicerie</Button></a>
                     </div>
                     <ul className="auth-routes">
                         {
