@@ -5,7 +5,6 @@ import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
 import 'react-toastify/dist/ReactToastify.css';
-import Divider from '@material-ui/core/Divider'
 import Route from '../../images/Img-front.jpg'
 import Button from "@material-ui/core/Button";
 

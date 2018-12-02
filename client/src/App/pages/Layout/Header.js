@@ -10,13 +10,7 @@ import Collapse from '@material-ui/core/Collapse';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Hidden from '@material-ui/core/Hidden'
-import MenuList from '@material-ui/core/MenuList';
-import MenuItem from '@material-ui/core/MenuItem';
 import Drawer from '@material-ui/core/Drawer';
-import AccountCircle from '@material-ui/icons/AccountCircle'
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import Select from '@material-ui/core/Select';
 
 const config = require('../../utils/storage');
 

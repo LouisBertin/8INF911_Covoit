@@ -5,7 +5,6 @@ import FormControl from "@material-ui/core/FormControl";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
 import './SignUp.css';
 import {Redirect} from 'react-router-dom'
 class SignUp extends Component {

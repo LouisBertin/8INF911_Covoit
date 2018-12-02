@@ -42,7 +42,6 @@ class Booking extends Component {
     render() {
         const {firstName, lastName} = this.props.marker.user;
         const {currentSeats, totalSeats} = this.props.marker.seats;
-        const destination = this.props.marker.destination.text;
         const {loggedIn} = this.props;
         const is_current_user = (this.state.current_user._id === this.props.marker.user.id) ? true : null;
         const is_booked = this.isBooked();
