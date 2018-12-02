@@ -106,7 +106,7 @@ class Map extends Component {
                 const is_user_circle = $this.props.circle[0];
 
                 if (is_user_circle) {
-                    if (marker_circle) {
+                    if (marker_circle instanceof MapboxCircle) {
                         marker_circle.remove()
                     }
                     marker_circle = new MapboxCircle({lat: lat, lng: lng}, circle_radius, {
@@ -135,7 +135,8 @@ class Map extends Component {
                     const is_user_circle = $this.props.circle[0];
 
                     if (is_user_circle) {
-                        if (marker_circle) {
+                        if (marker_circle instanceof MapboxCircle) {
+                            console.log(marker_circle instanceof MapboxCircle)
                             marker_circle.remove()
                         }
                         marker_circle = new MapboxCircle({lat: user_lat, lng: user_lng}, circle_radius, {

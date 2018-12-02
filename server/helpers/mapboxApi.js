@@ -17,7 +17,7 @@ module.exports = {
             const response = await axios(`https://api.mapbox.com/directions/v5/mapbox/walking/${lngStart},${latStart};${lngEnd},${latEnd}?access_token=` + config.mapboxToken)
             return response.data.routes[0].distance;
         } catch (e) {
-            console.log(e.response.data)
+            console.log(e.response)
         }
     }
 }
