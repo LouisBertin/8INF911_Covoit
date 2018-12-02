@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import './MyBooking.css'
 
+import Dialog from "@material-ui/core/Dialog/Dialog";
 const config = require('../../utils/storage')
 
 class MyBooking extends Component {
@@ -15,7 +16,9 @@ class MyBooking extends Component {
 
         this.state = {
             bookings: null,
-            current_user: null
+            current_user: null,
+            dialog: false,
+            booking_id: null
         }
     }
 
@@ -77,7 +80,7 @@ class MyBooking extends Component {
                                         (differenceInHours(new Date(booking.marker.departureDate)), new Date() >= 24) ?
                                             <Button variant={"contained"} color={"secondary"} className={"alignement"}
                                                     onClick={() => {
-                                                        this.cancelBooking(booking._id)
+                                                        () => {this.openDialog(booking._id)
                                                     }}>Annuler</Button> : null
                                     }
 
@@ -118,12 +121,33 @@ class MyBooking extends Component {
                     }
                 </ul>
 
+                <Dialog open={this.state.dialog} className="dialog-save" onBackdropClick={this.closeDialog}>
+                    <p>Êtes vous sûr d'annuler cette réservation ?</p>
+
+                    <Button variant="contained"
+                            color="secondary" onClick={this.cancelBooking} >Oui</Button>
+                    <Button variant="contained"
+                            color="primary"
+                            onClick={this.closeDialog}>Non</Button>
+                </Dialog>
             </div>
         )
     }
 
-    cancelBooking = (id) => {
+    // dialog
+    openDialog = (id) => {
+        this.setState({
+            dialog: true,
+            booking_id: id
+        })
+    }
+    closeDialog = () => {
+        this.setState({dialog: false})
+    }
+
+    cancelBooking = () => {
         const $this = this;
+        const { booking_id } = this.state;
 
         fetch('/api/booking/cancel', {
             method: 'POST',
@@ -131,12 +155,13 @@ class MyBooking extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                id: id
+                id: booking_id
             })
         }).then(res => res.json())
             .then(function (json) {
                 if (json.success) {
-                    $this.componentWillMount()
+                    $this.closeDialog();
+                    $this.componentWillMount();
                 }
             })
     }
