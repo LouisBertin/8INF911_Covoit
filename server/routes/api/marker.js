@@ -25,11 +25,11 @@ module.exports = (app) => {
     })
 
     app.get('/api/markers/user', (req, res) => {
-        const { token } = req.query;
+        const {token} = req.query;
 
-        UserSession.findOne({ _id: token }, function (err, user_session) {
+        UserSession.findOne({_id: token}, function (err, user_session) {
             const user_id = user_session.userId;
-            User.findOne({_id: user_id}, function(err, user) {
+            User.findOne({_id: user_id}, function (err, user) {
                 res.json(user)
             });
         });
@@ -57,7 +57,7 @@ module.exports = (app) => {
 
         // find user and insert marker in db
         UserSession.findOne({ _id: token }, function (err, userSession) {
-            User.findOne({ _id: userSession.userId }, async function (err, user) {
+            User.findOne({_id: userSession.userId}, async function (err, user) {
                 const placeStart = await mapboxApi.placeData(lng, lat)
                 const placeEnd = await mapboxApi.placeData(latLngEnd.lng, latLngEnd.lat)
 
@@ -93,8 +93,8 @@ module.exports = (app) => {
             if (err) return handleError(err);
 
             Booking.deleteMany({
-                'markerId': { $in: id}
-            }, function(err, bookings) {
+                'markerId': {$in: id}
+            }, function (err, bookings) {
                 return res.send({
                     success: true,
                     message: 'Marker deleted!'
@@ -112,7 +112,7 @@ module.exports = (app) => {
         } = body
 
         // retrieve markers
-        Marker.find({departureDate: { $gte: new Date()}}, function(err, markers){
+        Marker.find({departureDate: {$gte: new Date()}}, function (err, markers) {
             if(err) {
                 console.log(err);
                 return
@@ -145,8 +145,8 @@ module.exports = (app) => {
                 if (markers.length > 0) {
                     // get markers bookings
                     Booking.find({
-                        'markerId': { $in: markers_id}
-                    }, function(err, bookings) {
+                        'markerId': {$in: markers_id}
+                    }, function (err, bookings) {
                         if (err) {
                             console.log(err);
                             return
@@ -154,9 +154,9 @@ module.exports = (app) => {
 
                         // retrieve marker creator aka driver
                         User.find({
-                            '_id': { $in: users_ids}
-                        }, function(err, users){
-                            if(err) {
+                            '_id': {$in: users_ids}
+                        }, function (err, users) {
+                            if (err) {
                                 console.log(err);
                                 return
                             }

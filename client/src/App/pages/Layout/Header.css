@@ -3,10 +3,14 @@
     background-color: black;
 }
 
+.Collapse {
+
+}
+
 .overlay {
     height: 100%;
     width: 100%;
-    background: rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2);
     position: absolute;
     top: 0;
     left: 0;
@@ -31,3 +35,8 @@
     align-items: center;
 }
 
+.Header {
+    overflow: visible;
+    max-height: 5em;
+
+}

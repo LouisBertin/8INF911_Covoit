@@ -7,7 +7,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import './SignUp.css';
-
+import {Redirect} from 'react-router-dom'
 class SignUp extends Component {
 
     constructor(props) {
@@ -21,7 +21,8 @@ class SignUp extends Component {
             signUpFirstName: '',
             signUpLastName: '',
             signUpEmail: '',
-            signUpPassword: ''
+            signUpPassword: '',
+            redirect: false,
         }
     }
 
@@ -50,6 +51,9 @@ class SignUp extends Component {
             this.setState({
                 isLoading: false
             })
+            if (this.state.redirect) {
+                return <Redirect to='/'/>
+            }
         }
     }
 
@@ -89,9 +93,16 @@ class SignUp extends Component {
             .then(json => {
                 this.setState({
                     signUpError: json.message,
+                    redirect: true,
                 })
+
             })
     };
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to='/'/>
+        }
+    }
 
     render() {
 
@@ -150,9 +161,10 @@ class SignUp extends Component {
                             onChange={this.handleSignUpPassword}
                         />
                         </FormControl>
-                        <Button onClick={this.onSignUp} color="primary" variant={"contained"}>S'inscrire</Button>
+                            <Button onClick={this.onSignUp} color="primary" variant={"contained"}>S'inscrire</Button>
                         </Paper>
                     </div>
+                    {this.renderRedirect()}
                 </div>
             )
         }

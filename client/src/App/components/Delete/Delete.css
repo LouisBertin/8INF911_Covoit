@@ -1,0 +1,9 @@
+.DeleteText {
+    padding: 3em;
+
+}
+
+.DeleteText > Button {
+    margin-left: 5em;
+
+}

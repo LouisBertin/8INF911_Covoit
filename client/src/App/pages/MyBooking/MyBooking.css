@@ -1,0 +1,41 @@
+ul {
+    list-style-type: none;
+}
+
+.mesReservations {
+
+    border-bottom: #1e5799 solid 1px;
+    color: #1e5799;
+    padding-left: 43%;
+}
+
+.papier {
+    margin: auto;
+    padding: 2em;
+    width: 50%;
+}
+
+li {
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2em;
+}
+
+.espacement {
+    margin: auto;
+}
+
+.alignement {
+    position: relative;
+    left: 45%;
+}
+
+.material-icons.red {
+    color: #fb1400;
+}
+
+.bold {
+    font-weight: bold;
+    text-decoration: underline;
+}

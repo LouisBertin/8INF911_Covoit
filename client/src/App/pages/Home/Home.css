@@ -1,26 +1,56 @@
-.Route{
+.Route {
     max-width: 100%;
+    filter: brightness(50%);
 }
 
-.ImgAccueil{
+.ImgAccueil {
     position: relative;
+    overflow: hidden;
+
+    max-height: 40em;
+
 }
 
+.Bouton {
+    position: absolute;
+    height: 5em;
+    width: 10em;
+    top: 10%;
+    left: 40%;
+
+}
+
+.sliderContainer {
+    background-color: white;
+    padding: 2em;
+    border-radius: 53%;
+}
 
 .Message1 {
     position: absolute;
-    top: 10%;
-    left: 60%;
+    top: 30%;
+    left: 10%;
     color: white;
     font-family: "Open Sans";
+    font-size: 2em;
+    height: 5em;
+
+
 }
 
 .Message2 {
     text-align: center;
-    color: #1e5799;
+
     font-family: "Open Sans"
 }
 
-.MapHome{
+.MapHome {
     margin: 3em;
+
+}
+
+.MapnMess {
+
+    height: 100%;
+
 }

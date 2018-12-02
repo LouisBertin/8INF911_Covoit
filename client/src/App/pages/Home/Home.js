@@ -5,7 +5,10 @@ import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
 import 'react-toastify/dist/ReactToastify.css';
-import Route from '../../Images/Img-front.jpg'
+import Divider from '@material-ui/core/Divider'
+import Route from '../../images/Img-front.jpg'
+import Button from "@material-ui/core/Button";
+
 
 const Handle = Slider.Handle;
 
@@ -26,28 +29,35 @@ class Home extends Component {
                     <div className="overlay"></div>
                     <img src={Route} className="Route" alt="Route sur une belle vue"/>
                     <div className="Message1">
-                        <h1> Faites vos courses pendant l'hiver en tout confort !</h1>
+                        <h1> Besoin de faire vos courses en toute tranquilité ?</h1>
+                        <a href="#MapCenter"> <Button color={"primary"} variant={"contained"} className="Bouton"> C'est
+                            parti ! </Button></a>
                         <h2>Trouvez un covoiturage à deux pas de chez vous !</h2>
                     </div>
                 </div>
-                <div className="Message2">
-                    <h1> Pour commencer, selectionner un conducteur ci-dessous ! </h1>
-                </div>
-                <div className="MapHome" id="MapCenter">
-                    <Slider
-                        min={300}
-                        max={1000}
-                        step={100}
-                        defaultValue={3}
-                        handle={this.handle}
-                        onAfterChange={this.updateSlider}
-                    />
-                    <Map
-                        userGeolocate={true}
-                        circle={this.state.slider_value}
-                        loggedIn={this.props.loggedIn}
-                        notify={this.props.notify}
-                    />
+                <div className={"MapnMess"}>
+                    <div className="Message2">
+                        <h1> Pour commencer, sélectionner un conducteur ci-dessous ! </h1>
+                        <p>Utilisez le curseur pour augmenter votre périmètre de recherche</p>
+                    </div>
+                    <div className="MapHome" id="MapCenter">
+                        <div className="sliderContainer">
+                            <Slider
+                                min={300}
+                                max={1000}
+                                step={100}
+                                defaultValue={3}
+                                handle={this.handle}
+                                onAfterChange={this.updateSlider}
+                            />
+                        </div>
+                        <Map
+                            userGeolocate={true}
+                            circle={this.state.slider_value}
+                            loggedIn={this.props.loggedIn}
+                            notify={this.props.notify}
+                        />
+                    </div>
                 </div>
             </div>
         )

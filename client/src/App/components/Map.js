@@ -233,6 +233,7 @@ class Map extends Component {
                 for (let marker of json) {
                     const placeholder = document.createElement('div');
                     ReactDOM.render(<Delete id={marker._id}
+                                            marker={marker}
                                             notify={this.props.notify}
                                             userMarker={this.userMarker}
                                             token={token} />, placeholder);
@@ -306,7 +307,11 @@ class Map extends Component {
                                 "firstName": marker.user[0].firstName,
                                 "lastName": marker.user[0].lastName,
                                 "email": marker.user[0].email
-                            }
+                            },
+                        "destination": marker.placeEnd,
+                        "start": marker.placeStart,
+                        "date": marker.departureDate
+
                         };
                     geojson.markers.push(marker)
                 }

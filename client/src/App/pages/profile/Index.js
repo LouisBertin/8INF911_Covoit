@@ -5,7 +5,7 @@ import './Index.css';
 import Dialog from '@material-ui/core/Dialog';
 import Button from "@material-ui/core/Button/Button";
 import TextField from '@material-ui/core/TextField';
-import { DateTimePicker } from 'material-ui-pickers';
+import {DateTimePicker} from 'material-ui-pickers';
 
 class Index extends Component {
 
@@ -40,11 +40,11 @@ class Index extends Component {
     }
 
     render () {
-        const { userToken, errorMsg, is_mounted } = this.state;
+        const {userToken, errorMsg, is_mounted} = this.state;
 
         return (
             <div className="Profile">
-                <h3>Gérer vos marqueurs</h3>
+                <h3 className={"Titre"}>Mes trajets</h3>
 
                 <div className="MAP">
 
@@ -65,7 +65,8 @@ class Index extends Component {
                         />) : null
                     }
 
-                    <Dialog open={this.state.dialog_open} className="dialog-save" onBackdropClick={this.onBackdropClick}>
+                    <Dialog open={this.state.dialog_open} className="dialog-save"
+                            onBackdropClick={this.onBackdropClick}>
                         <p>Votre trajet est-il bien correct ?</p>
 
                         <Button variant="contained"
@@ -76,7 +77,8 @@ class Index extends Component {
                                 onClick={this.closeDialog}>Non</Button>
                     </Dialog>
 
-                    <Dialog open={this.state.time_dialog} className="dialog-save" onBackdropClick={this.onBackdropClick}>
+                    <Dialog open={this.state.time_dialog} className="dialog-save"
+                            onBackdropClick={this.onBackdropClick}>
                         <h3>Configuration de la course</h3>
                         <TextField
                             id="standard-number"
@@ -93,10 +95,10 @@ class Index extends Component {
                             onChange={this.handleDateChange}
                         />
                         <Button variant="contained"
-                                color="secondary"
+                                color="primary"
                                 onClick={this.onAddMarker}>Oui</Button>
                         <Button variant="contained"
-                                color="primary"
+                                color="secondary"
                                 onClick={this.onBackdropClick}>Non</Button>
                     </Dialog>
                 </div>
@@ -127,7 +129,7 @@ class Index extends Component {
         this.setState({dialog_open: false})
     };
     handleDateChange = (date) => {
-        this.setState({ selectedDate: date });
+        this.setState({selectedDate: date});
     };
     openTimeDialog = () => {
         this.setState({time_dialog: true})

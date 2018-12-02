@@ -9,12 +9,13 @@
     width: 80%;
     margin: auto;
 }
-.app{
+
+.app {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
 }
 
-.SiteContent{
+.SiteContent {
     flex: 1;
 }

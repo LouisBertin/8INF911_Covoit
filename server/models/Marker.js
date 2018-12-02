@@ -14,7 +14,7 @@ const MarkerSchema = new mongoose.Schema({
         default: 0
     }
 }, {
-    timestamps: { createdAt: true}
+    timestamps: {createdAt: true}
 });
 
 module.exports = mongoose.model('Marker', MarkerSchema);

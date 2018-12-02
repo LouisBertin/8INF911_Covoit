@@ -1,4 +1,4 @@
-.MAP{
+.MAP {
     margin: 2em;
 }
 
@@ -8,4 +8,11 @@
 
 .dialog-save > div > div > button {
     margin-top: 1em;
+}
+
+.Profile > h3 {
+    margin-left: 45%;
+    margin-top: 2em;
+    color: #1e5799;
+    font-family: "Open Sans"
 }

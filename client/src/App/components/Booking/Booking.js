@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import {getFromStorage} from "../../utils/storage";
+import Format from "date-fns/format";
 
 const config = require('../../utils/storage');
 
@@ -32,26 +33,34 @@ class Booking extends Component {
                     this.setState({current_user: user})
                 })
             }
+            {
+                console.log(this.props.marker)
+            }
         }
     }
 
     render() {
         const {firstName, lastName} = this.props.marker.user;
         const {currentSeats, totalSeats} = this.props.marker.seats;
+        const destination = this.props.marker.destination.text;
         const {loggedIn} = this.props;
         const is_current_user = (this.state.current_user._id === this.props.marker.user.id) ? true : null;
         const is_booked = this.isBooked();
 
         return (
             <div>
-                <p>Driver : {firstName} {lastName}</p>
+                <p className={"bold"}>Destination : {this.props.marker.destination.text}</p>
+                <p>Chauffeur : {firstName} {lastName}</p>
+                <p>Départ : {this.props.marker.start.place_name}</p>
+                <p> Départ prévu : {Format(this.props.marker.date, 'yyyy-MM-dd HH:mm')}</p>
                 <p>Places : {(currentSeats === undefined) ? 0 : currentSeats} / {totalSeats}</p>
                 {
                     (loggedIn) ? (
                         (!is_current_user) ? (
                             (currentSeats !== totalSeats) ? (
                                 (!is_booked) ? (
-                                    <Button color="primary" variant="contained" onClick={this.handleButtonClick}>
+                                    <Button className={"Reserver"} color="primary" variant="contained"
+                                            onClick={this.handleButtonClick}>
                                         Réserver
                                     </Button>
                                 ) : <p style={{color: "blue"}}><b>réservé</b></p>
@@ -67,7 +76,7 @@ class Booking extends Component {
                     onBackdropClick={this.closeModal}
                 >
                     <div style={{padding: "2em", textAlign: "center"}}>
-                        <h3>Hello {firstName} {lastName}</h3>
+                        <h3>Hello {this.state.current_user.firstName} {this.state.current_user.lastName}</h3>
                         <p>Êtes-vous sûr de vouloir réserver ?</p>
                         <Button color="primary" variant="contained" onClick={this.validateBooking}>
                             Valider

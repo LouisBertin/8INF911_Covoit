@@ -6,7 +6,9 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import Paper from "@material-ui/core/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
+import {Redirect} from 'react-router-dom'
 import './SignIn.css'
+
 
 const styles = theme => ({
     layout: {
@@ -54,6 +56,8 @@ class SignIn extends Component {
             // signIn
             signInEmail: '',
             signInPassword: '',
+            user: [],
+            redirect: false,
         }
     }
 
@@ -85,6 +89,7 @@ class SignIn extends Component {
         }
     }
 
+
     // sign in
     handleSignInEmail = (event) => {
         this.setState({signInEmail: event.target.value})
@@ -115,7 +120,8 @@ class SignIn extends Component {
                     setInStorage('the_main_app', {token: json.token})
                     this.setState({
                         signInError: json.message,
-                        token: json.token
+                        token: json.token,
+                        redirect: true
                     });
                     this.props.loggedIn()
                 } else {
@@ -125,7 +131,21 @@ class SignIn extends Component {
                 }
             })
     }
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to='/'/>
+        }
+    }
 
+
+    getName() {
+        const url = '/api/account/name?token=' + this.state.token;
+        fetch(url)
+            .then(res => res.json())
+            .then(json => {
+                this.setState({user: json.user_session})
+            });
+    }
     render() {
         const {isLoading, token, signInError, signInEmail, signInPassword} = this.state;
 
@@ -180,9 +200,15 @@ class SignIn extends Component {
 
         return (
             <div className="SignIn">
-                <p>Account</p>
+                /*{console.log(this.state.user+"515")}
+                <p>{this.state.user.map(user => (
+                    <p> {user._id}</p>
+                ))}</p>*/
+                {this.renderRedirect()}
+
             </div>
         );
+
     }
 
 }
