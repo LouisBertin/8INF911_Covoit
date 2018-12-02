@@ -21,6 +21,11 @@ class Map extends Component {
     constructor(props) {
         super(props);
 
+        // reset circle on build
+        if (marker_circle instanceof MapboxCircle) {
+            marker_circle = undefined
+        }
+
         this.state = {
             is_mounted_booking: true
         }
@@ -136,7 +141,6 @@ class Map extends Component {
 
                     if (is_user_circle) {
                         if (marker_circle instanceof MapboxCircle) {
-                            console.log(marker_circle instanceof MapboxCircle)
                             marker_circle.remove()
                         }
                         marker_circle = new MapboxCircle({lat: user_lat, lng: user_lng}, circle_radius, {
