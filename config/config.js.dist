@@ -1,3 +1,4 @@
 module.exports = {
-    db: 'mongodb://localhost:27017/test'
+    db: 'mongodb://localhost:27017/test',
+    mapboxToken: 'pk.eyJ1IjoibG91aXNiZXJ0aW4iLCJhIjoiY2pvOHo5OWM2MDAwazNycDBqdmg4dDNlaSJ9.dG2toPupuK_AbxZtAyqINQ'
 }
