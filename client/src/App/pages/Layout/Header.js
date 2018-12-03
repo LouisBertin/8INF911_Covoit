@@ -36,7 +36,7 @@ class Header extends Component {
                                 ) :
                                 /* Authenticated routes */
                                 <div>
-                                    <Link to="/user/profile"><Button>Admin</Button></Link>
+                                    <Link to="/user/profile"><Button>Mes trajets</Button></Link>
                                     <Link to="/user/mybookings"><Button>Mes Réservations</Button></Link>
                                     <Logout/>
                                 </div>

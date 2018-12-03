@@ -238,6 +238,7 @@ class Map extends Component {
                 for (let marker of json) {
                     const placeholder = document.createElement('div');
                     ReactDOM.render(<Delete id={marker._id}
+                                            marker={marker}
                                             notify={this.props.notify}
                                             userMarker={this.userMarker}
                                             token={token} />, placeholder);
@@ -291,13 +292,17 @@ class Map extends Component {
                 }
                 for (let marker of json) {
                     marker = {
-                            "seats" :{
+                            "seats": {
                                 "totalSeats": marker.totalSeats,
                                 "currentSeats": marker.currentSeats
                             },
                             "properties": {
                                 "userId": marker.userId,
                                 "markerId": marker._id
+                            },
+                            "misc": {
+                                "place_end": marker.placeEnd.place_name,
+                                "departure_date": marker.departureDate
                             },
                             "geometry": {
                                 "coordinates": [

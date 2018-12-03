@@ -44,7 +44,7 @@ class Index extends Component {
 
         return (
             <div className="Profile">
-                <h3>Gérer vos marqueurs</h3>
+                <h3>Gestion de vos trajets</h3>
 
                 <div className="MAP">
 

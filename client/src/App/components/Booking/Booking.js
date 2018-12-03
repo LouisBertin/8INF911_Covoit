@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import {getFromStorage} from "../../utils/storage";
+import Format from 'date-fns/format';
 const config = require('../../utils/storage')
 
 const overrideStyles = {
@@ -37,14 +38,17 @@ class Booking extends Component {
     render() {
         const {firstName, lastName} = this.props.marker.user;
         const {currentSeats, totalSeats} = this.props.marker.seats;
+        const { place_end, departure_date } = this.props.marker.misc;
         const {loggedIn} = this.props;
         const is_current_user = (this.state.current_user._id === this.props.marker.user.id) ? true : null;
         const is_booked = this.isBooked();
 
         return (
             <div>
-                <p>Driver : {firstName} {lastName}</p>
-                <p>Places : {(currentSeats === undefined) ? 0 : currentSeats} / {totalSeats}</p>
+                <p><b>Conducteur</b> : {firstName} {lastName}</p>
+                <p><b>Date</b> : {Format(departure_date, 'yyyy-MM-dd HH:mm')}</p>
+                <p><b>Arrivée</b> : {place_end}</p>
+                <p><b>Places</b> : {(currentSeats === undefined) ? 0 : currentSeats} / {totalSeats}</p>
                 {
                     (loggedIn) ? (
                         (!is_current_user) ? (
@@ -53,9 +57,9 @@ class Booking extends Component {
                                     <Button color="primary" variant="contained" onClick={this.handleButtonClick}>
                                         Réserver
                                     </Button>
-                                ) : <p style={{color: "blue"}}><b>réservé</b></p>
+                                ) : <p style={{color: "blue", textAlign: 'center'}}><b>Réservé</b></p>
                             ) : <p style={{color: "red"}}><b>CoVoit complet!</b></p>
-                        ) : <p style={{color: "green"}}><b>c'est ton marqueur boy!</b></p>
+                        ) : <p style={{color: "green"}}><b>C'est votre trajet</b></p>
                     ) : <p style={{color: "red"}}><b>Veuillez vous connecter pour réserver</b></p>
                 }
 
@@ -66,7 +70,9 @@ class Booking extends Component {
                     onBackdropClick={this.closeModal}
                 >
                     <div style={{padding: "2em", textAlign: "center"}}>
-                        <h3>Hello {firstName} {lastName}</h3>
+                        <p><b>Conducteur</b> : {firstName} {lastName}</p>
+                        <p><b>Date</b> : {Format(departure_date, 'yyyy-MM-dd HH:mm')}</p>
+                        <p><b>Arrivée</b> : {place_end}</p>
                         <p>Êtes-vous sûr de vouloir réserver ?</p>
                         <Button color="primary" variant="contained" onClick={this.validateBooking}>
                             Valider

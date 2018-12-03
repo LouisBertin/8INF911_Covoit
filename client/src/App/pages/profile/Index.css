@@ -1,11 +1,11 @@
-.MAP{
-    margin: 2em;
-}
-
 .dialog-save > div > div {
     padding: 2em;
 }
 
 .dialog-save > div > div > button {
     margin-top: 1em;
+}
+
+.Profile {
+    padding: 2em;
 }

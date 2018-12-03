@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+import Format from 'date-fns/format';
 
 const overrideStyles = {
     padding: "5em",
@@ -18,9 +19,16 @@ class Delete extends Component {
     }
 
     render() {
+        const marker = this.props.marker;
+
         return (
-            <div>
+            <div style={{textAlign: 'center'}}>
+                <p><b>Départ</b> : {marker.placeStart.place_name}</p>
+                <p><b>Arrivée</b> : {marker.placeEnd.place_name}</p>
+                <p><b>Place(s)</b> : {marker.currentSeats} / {marker.totalSeats}</p>
+                <p><b>Date</b> : {Format(marker.departureDate, 'yyyy-MM-dd HH:mm')}</p>
                 <Button variant="contained" color="secondary" onClick={this.handleButtonClick}>Supprimer</Button>
+
                 <Dialog
                     open={this.state.open}
                     maxWidth="md"

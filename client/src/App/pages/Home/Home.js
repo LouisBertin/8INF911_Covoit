@@ -31,7 +31,7 @@ class Home extends Component {
                     </div>
                 </div>
                 <div className="Message2">
-                    <h1> Pour commencer, selectionner un conducteur ci-dessous ! </h1>
+                    <h1> Pour commencer, sélectionner un trajet ci-dessous ! </h1>
                 </div>
                 <div className="MapHome" id="MapCenter">
                     <Slider
