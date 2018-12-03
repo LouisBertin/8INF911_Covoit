@@ -34,7 +34,7 @@ class Delete extends Component {
                 >
                     <div className="DeleteText">
                         <p>
-                            Souhaitez-vous réellement supprimer ce marqueur ?
+                            Souhaitez-vous réellement supprimer ce trajet ?
                         </p>
                         <Button variant="contained" color="secondary"
                                 onClick={() => this.onDelete(this.props.id)}> Oui </Button>

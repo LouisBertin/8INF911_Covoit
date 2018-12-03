@@ -76,13 +76,13 @@ class MyBooking extends Component {
                                                     calendar_today
                                                     </i> {Format(booking.marker.departureDate, 'yyyy-MM-dd HH:mm')}</span>
                                     </li>
-                                    {
+                                    /*{
                                         (differenceInHours(new Date(booking.marker.departureDate)), new Date() >= 24) ?
                                             <Button variant={"contained"} color={"secondary"} className={"alignement"}
                                                     onClick={() => {
-                                                        () => {this.openDialog(booking._id)
+                                                        this.openDialog(booking._id)
                                                     }}>Annuler</Button> : null
-                                    }
+                                    }*/
 
                                 </Paper>
                                 <Divider/>
@@ -125,7 +125,7 @@ class MyBooking extends Component {
                     <p>Êtes vous sûr d'annuler cette réservation ?</p>
 
                     <Button variant="contained"
-                            color="secondary" onClick={this.cancelBooking} >Oui</Button>
+                            color="secondary" onClick={this.cancelBooking}>Oui</Button>
                     <Button variant="contained"
                             color="primary"
                             onClick={this.closeDialog}>Non</Button>
@@ -147,7 +147,7 @@ class MyBooking extends Component {
 
     cancelBooking = () => {
         const $this = this;
-        const { booking_id } = this.state;
+        const {booking_id} = this.state;
 
         fetch('/api/booking/cancel', {
             method: 'POST',
