@@ -73,18 +73,18 @@ class MyBooking extends Component {
                 </ul>
 
                 <h3>Mes réservations passées</h3>
-                <ul>
-                    {
-                        (bookings) ? bookings.past_bookings.map((booking) =>
-                            <li key={booking._id}>
+                {
+                    (bookings) ? bookings.past_bookings.map((booking) =>
+                        <div>
+                            <Paper elevation={3} key={booking._id} style={{padding: '1em'}}>
                                 <span>Covoit avec {booking.driver.firstName} {booking.driver.lastName} !</span><br/>
                                 <span>Départ : {booking.marker.placeStart.place_name}</span><br/>
                                 <span>Arrivée : {booking.marker.placeEnd.place_name}</span><br/>
                                 <span>Date : {Format(booking.marker.departureDate, 'yyyy-MM-dd HH:mm')}</span>
-                            </li>
-                        ) : null
-                    }
-                </ul>
+                            </Paper><br/>
+                        </div>
+                    ) : null
+                }
 
                 <Dialog open={this.state.dialog} className="dialog-save" onBackdropClick={this.closeDialog}>
                     <p>Êtes vous sûr d'annuler cette réservation ?</p>
