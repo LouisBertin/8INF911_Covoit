@@ -5,7 +5,7 @@ import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
 import 'react-toastify/dist/ReactToastify.css';
-import Route from '../../Images/Img-front.jpg'
+import Route from '../../Images/home.jpg'
 
 const Handle = Slider.Handle;
 
