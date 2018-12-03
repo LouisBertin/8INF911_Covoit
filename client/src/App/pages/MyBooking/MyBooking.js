@@ -62,7 +62,7 @@ class MyBooking extends Component {
                                     <span><b>Arrivée</b> : {booking.marker.placeEnd.place_name}</span><br/>
                                     <span><b>Date</b> : {Format(booking.marker.departureDate, 'yyyy-MM-dd HH:mm')}</span><br/><br/>
                                     {
-                                        (differenceInHours(new Date(booking.marker.departureDate)), new Date() >= 24) ?
+                                        ( differenceInHours(new Date(booking.marker.departureDate), new Date()) >= 24 ) ?
                                             <Button variant="contained" color="secondary" onClick={ () => {this.openDialog(booking._id)} } >Annuler</Button>
                                             : null
                                     }
