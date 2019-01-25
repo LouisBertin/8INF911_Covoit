@@ -1,4 +1,3 @@
-# Covoit
 Un site avec un front en [ReactJS](https://reactjs.org/) et un back-end en [NodeJS](https://nodejs.org/en/) :fire:
 
 ## Prérequis
